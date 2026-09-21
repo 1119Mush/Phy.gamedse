@@ -2,1169 +2,1299 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ 物理獸 DSE · Physics Pals 實驗室</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⚡ 物理獸 DSE · Physics Pals</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFF9F0;
-  --ink:#2B2D42;
-  --ink-soft:#6B6F7D;
-  --line:#EDE7DC;
-  --card:#FFFFFF;
-  --shadow:0 4px 20px rgba(80,60,30,.08);
-  --shadow-lg:0 20px 60px rgba(80,60,30,.15);
-  --radius:24px;
-  --radius-sm:14px;
-
-  /* 角色色 */
-  --newton:#F5A623;
-  --zappy:#FFD166;
-  --wavey:#2EC4B6;
-  --thermo:#EF476F;
-  --nuky:#8AC926;
-  --astro:#1B263B;
-  --atomi:#F72585;
-  --joule:#FF9F1C;
-  --meddy:#00B4D8;
+  --bg:#FFF9F0;--ink:#2B2D42;--soft:#8A8F9E;--line:#EDE7DC;
+  --card:#FFF;--shadow:0 4px 20px rgba(80,60,30,.08);
+  --radius:22px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
 body{
-  font-family:'Noto Sans TC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-  line-height:1.7;
+  font-family:'Noto Sans TC',-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-
-/* ===== 頂部導航 ===== */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(255,249,240,.85);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-  padding:0 20px;
-  transition:all .3s;
-}
-.nav-inner{
-  max-width:1200px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-  height:64px;
-}
-.nav-logo{
-  font-family:'Baloo 2',cursive;
-  font-weight:800;font-size:1.15rem;
-  display:flex;align-items:center;gap:8px;
-  color:var(--ink);text-decoration:none;
-}
-.nav-logo .dot{
-  width:12px;height:12px;border-radius:50%;
-  background:linear-gradient(135deg,var(--newton),var(--zappy));
-  box-shadow:0 0 0 4px rgba(245,166,35,.15);
-}
-.nav-links{
-  display:flex;gap:6px;align-items:center;
-  overflow-x:auto;scrollbar-width:none;
-  -ms-overflow-style:none;
-}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{
-  color:var(--ink-soft);text-decoration:none;
-  font-size:.85rem;font-weight:500;
-  padding:7px 14px;border-radius:999px;
-  white-space:nowrap;transition:all .2s;
-}
-.nav-links a:hover{background:rgba(245,166,35,.12);color:var(--ink)}
-
-/* ===== Hero ===== */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:100px 20px 60px;
-  position:relative;overflow:hidden;
-  text-align:center;
-}
-.hero-bg{
-  position:absolute;inset:0;z-index:0;
-  overflow:hidden;
-}
-.hero-bg .blob{
-  position:absolute;border-radius:50%;
-  filter:blur(80px);opacity:.5;
-}
-.hero-bg .b1{width:500px;height:500px;background:#FFD166;top:-10%;left:-10%;animation:float1 18s ease-in-out infinite}
-.hero-bg .b2{width:600px;height:600px;background:#4CC9F0;bottom:-20%;right:-10%;animation:float2 22s ease-in-out infinite}
-.hero-bg .b3{width:400px;height:400px;background:#F72585;top:30%;right:20%;animation:float1 20s ease-in-out infinite reverse}
-@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
-@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,40px)}}
-
-.hero-content{position:relative;z-index:1;max-width:820px}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.9);
-  border:1px solid var(--line);
-  padding:8px 20px;border-radius:999px;
-  font-size:.8rem;font-weight:600;color:var(--ink-soft);
-  box-shadow:var(--shadow);
-  margin-bottom:28px;
-}
-.hero-badge .live{
-  width:8px;height:8px;border-radius:50%;
-  background:#06D6A0;box-shadow:0 0 0 4px rgba(6,214,160,.2);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-.hero h1{
-  font-family:'Baloo 2',cursive;
-  font-size:clamp(2.2rem,7vw,4.5rem);
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:18px;
-  letter-spacing:-.02em;
-}
-.hero h1 .grad{
-  background:linear-gradient(120deg,#F5A623 0%,#EF476F 40%,#9B5DE5 70%,#4CC9F0 100%);
-  -webkit-background-clip:text;background-clip:text;
-  color:transparent;
-}
-.hero h2{
-  font-size:clamp(1rem,2.5vw,1.3rem);
-  color:var(--ink-soft);font-weight:500;
-  margin-bottom:36px;
-  max-width:600px;margin-left:auto;margin-right:auto;
-}
-.hero-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:14px 32px;border-radius:999px;
-  font-family:inherit;font-size:.95rem;font-weight:700;
-  text-decoration:none;cursor:pointer;border:none;
-  transition:all .2s;
-}
-.btn-primary{
-  background:var(--ink);color:#fff;
-  box-shadow:0 8px 24px rgba(43,45,66,.25);
-}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(43,45,66,.35)}
-.btn-ghost{
-  background:rgba(255,255,255,.9);color:var(--ink);
-  border:1.5px solid var(--line);
-}
-.btn-ghost:hover{transform:translateY(-2px);border-color:var(--ink)}
-
-.hero-stats{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:20px;max-width:640px;margin:0 auto;
-}
-.hero-stat{text-align:center}
-.hero-stat .num{
-  font-family:'Baloo 2',cursive;
-  font-size:clamp(1.6rem,4vw,2.4rem);
-  font-weight:800;color:var(--ink);line-height:1;
-  margin-bottom:6px;
-}
-.hero-stat .lbl{font-size:.75rem;color:var(--ink-soft);font-weight:500}
-
-/* ===== 通用 Section ===== */
-.section{padding:80px 20px;position:relative}
-.container{max-width:1200px;margin:0 auto}
-.section-head{text-align:center;margin-bottom:56px}
-.section-tag{
-  display:inline-block;
-  font-size:.72rem;font-weight:700;
-  letter-spacing:.18em;color:var(--ink-soft);
-  background:rgba(255,255,255,.8);
-  border:1px solid var(--line);
-  padding:6px 16px;border-radius:999px;
-  margin-bottom:16px;
-}
-.section-head h2{
-  font-family:'Baloo 2',cursive;
-  font-size:clamp(1.6rem,4.5vw,2.8rem);
-  font-weight:800;line-height:1.2;
-  margin-bottom:12px;
-}
-.section-head p{
-  color:var(--ink-soft);font-size:.95rem;
-  max-width:640px;margin:0 auto;
-}
-
-/* ===== 一頁摘要 ===== */
-.summary-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-}
-.summary-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:28px 24px;
-  box-shadow:var(--shadow);
-  transition:all .3s;
-  position:relative;overflow:hidden;
-}
-.summary-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.summary-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--c1,#F5A623),var(--c2,#FFD166));
-}
-.summary-card .sc-icon{
-  width:44px;height:44px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;margin-bottom:14px;
-  background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(255,209,102,.15));
-}
-.summary-card h3{
-  font-size:1rem;font-weight:700;margin-bottom:8px;
-}
-.summary-card p{font-size:.85rem;color:var(--ink-soft);line-height:1.7}
-
-/* ===== 物理獸圖鑑 ===== */
-.pals-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:24px;
-}
-.pal-card{
-  background:var(--card);
-  border:1.5px solid var(--line);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--shadow);
-  transition:all .35s cubic-bezier(.2,.8,.2,1);
-  position:relative;overflow:hidden;
-  cursor:pointer;
-}
-.pal-card:hover{
-  transform:translateY(-6px) scale(1.01);
-  box-shadow:0 24px 60px rgba(80,60,30,.18);
-  border-color:var(--pal-color);
-}
-.pal-card::after{
-  content:'';position:absolute;
-  inset:0;
-  background:radial-gradient(circle at 50% 0%,var(--pal-color),transparent 60%);
-  opacity:0;transition:opacity .35s;
-  pointer-events:none;
-}
-.pal-card:hover::after{opacity:.08}
-
-.pal-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;position:relative;z-index:1}
-.pal-avatar{
-  width:80px;height:80px;flex-shrink:0;
-  border-radius:50%;
-  background:linear-gradient(140deg,var(--pal-color-light),#fff);
-  display:flex;align-items:center;justify-content:center;
-  border:3px solid #fff;
-  box-shadow:0 8px 20px rgba(80,60,30,.12);
-  transition:transform .35s;
-}
-.pal-card:hover .pal-avatar{transform:scale(1.08) rotate(-4deg)}
-.pal-avatar svg{width:64px;height:64px}
-.pal-meta .pal-name{
-  font-family:'Baloo 2',cursive;
-  font-size:1.3rem;font-weight:800;line-height:1.1;
-  color:var(--ink);margin-bottom:2px;
-}
-.pal-meta .pal-en{font-size:.72rem;color:var(--ink-soft);letter-spacing:.05em;margin-bottom:6px}
-.pal-tag{
-  display:inline-block;
-  font-size:.65rem;font-weight:700;
-  padding:3px 10px;border-radius:999px;
-  background:var(--pal-color);color:#fff;
-  letter-spacing:.05em;
-}
-.pal-card .pal-desc{
-  font-size:.85rem;color:var(--ink-soft);
-  line-height:1.7;margin-bottom:14px;position:relative;z-index:1;
-}
-.pal-quote{
-  font-size:.82rem;font-style:italic;
-  color:var(--pal-color);font-weight:500;
-  padding-left:12px;
-  border-left:3px solid var(--pal-color);
-  position:relative;z-index:1;
-  margin-bottom:14px;
-}
-.pal-foot{
-  display:flex;gap:6px;flex-wrap:wrap;
-  position:relative;z-index:1;
-}
-.pal-chip{
-  font-size:.68rem;font-weight:600;
-  padding:4px 10px;border-radius:999px;
-  background:rgba(0,0,0,.04);
-  color:var(--ink-soft);
-}
-
-/* ===== 物理島地圖 ===== */
-.island{
-  background:linear-gradient(180deg,#E8F4F8 0%,#FFF9F0 100%);
-  border-radius:32px;
-  padding:40px 24px;
-  border:1px solid var(--line);
-  box-shadow:var(--shadow);
-}
-.island-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-  max-width:1000px;margin:0 auto;
-}
-.island-zone{
-  background:rgba(255,255,255,.9);
-  border:1.5px solid var(--line);
-  border-radius:20px;
-  padding:20px 18px;
-  text-align:center;
-  transition:all .3s;
-  cursor:pointer;
-}
-.island-zone:hover{
-  transform:translateY(-4px);
-  box-shadow:0 16px 40px rgba(80,60,30,.12);
-  border-color:var(--zone-color);
-}
-.island-zone .zone-emoji{
-  font-size:2rem;margin-bottom:8px;display:block;
-  transition:transform .3s;
-}
-.island-zone:hover .zone-emoji{transform:scale(1.15) rotate(-6deg)}
-.island-zone .zone-name{
-  font-family:'Baloo 2',cursive;
-  font-size:1rem;font-weight:800;margin-bottom:4px;
-  color:var(--zone-color);
-}
-.island-zone .zone-sub{font-size:.72rem;color:var(--ink-soft);line-height:1.5}
-
-/* ===== 玩法 ===== */
-.modes-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
-}
-.mode-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:26px 22px;
-  box-shadow:var(--shadow);
-  transition:all .3s;
-}
-.mode-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.mode-card .mode-emoji{
-  width:52px;height:52px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;
-  background:linear-gradient(135deg,#FFF3D6,#FFE0E9);
-  margin-bottom:14px;
-}
-.mode-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
-.mode-card p{font-size:.85rem;color:var(--ink-soft);line-height:1.7}
-
-/* ===== 題目範例 ===== */
-.quiz-list{display:flex;flex-direction:column;gap:16px;max-width:840px;margin:0 auto}
-.quiz-item{
-  background:var(--card);
-  border:1.5px solid var(--line);
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  transition:all .3s;
-}
-.quiz-item.open{border-color:var(--q-color);box-shadow:var(--shadow-lg)}
-.quiz-head{
-  display:flex;align-items:center;gap:14px;
-  padding:20px 22px;
-  cursor:pointer;
   user-select:none;
 }
-.quiz-head .q-tag{
-  width:44px;height:44px;flex-shrink:0;
-  border-radius:12px;
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:active{transform:scale(.96)}
+
+/* ===== 通用 Screen ===== */
+.screen{
+  position:fixed;inset:0;
+  display:none;flex-direction:column;
+  overflow:hidden;
+}
+.screen.active{display:flex}
+
+/* ===== 載入 ===== */
+#loading{
   display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;
-  background:linear-gradient(135deg,var(--q-color-light),#fff);
-  border:1px solid var(--line);
+  background:linear-gradient(160deg,#FFE9C9,#FFD6E8,#D4E8FF);
 }
-.quiz-head .q-title{
-  flex:1;
-  font-size:.95rem;font-weight:700;color:var(--ink);
-  line-height:1.4;
-}
-.quiz-head .q-title small{display:block;font-size:.72rem;font-weight:500;color:var(--ink-soft);margin-top:2px}
-.quiz-head .q-toggle{
-  font-size:1.2rem;color:var(--ink-soft);
-  transition:transform .3s;
-}
-.quiz-item.open .q-toggle{transform:rotate(45deg)}
-.quiz-body{
-  max-height:0;overflow:hidden;
-  transition:max-height .4s cubic-bezier(.4,0,.2,1);
-}
-.quiz-item.open .quiz-body{max-height:600px}
-.quiz-body-inner{
-  padding:0 22px 22px;
-  border-top:1px dashed var(--line);
-  padding-top:18px;
-}
-.quiz-body-inner p{font-size:.88rem;color:var(--ink-soft);margin-bottom:10px;line-height:1.8}
-.quiz-body-inner .answer{
-  background:#F0FBF5;
-  border-left:4px solid #06D6A0;
-  border-radius:8px;
-  padding:14px 16px;
-  margin-top:12px;
-  font-size:.88rem;
-  color:var(--ink);
-  line-height:1.9;
-}
-.quiz-body-inner .answer strong{color:#06D6A0;font-weight:700}
-.quiz-body-inner .formula{
-  font-family:'Courier New',monospace;
-  background:rgba(0,0,0,.04);
-  padding:2px 8px;border-radius:6px;
-  font-size:.85rem;
-}
-
-/* ===== 開發路線 ===== */
-.roadmap{
-  position:relative;
-  max-width:760px;margin:0 auto;
-  padding-left:32px;
-}
-.roadmap::before{
-  content:'';position:absolute;
-  left:10px;top:8px;bottom:8px;
-  width:3px;
-  background:linear-gradient(180deg,var(--newton),var(--zappy),var(--wavey),var(--thermo),var(--astro));
-  border-radius:2px;
-}
-.road-item{
-  position:relative;margin-bottom:32px;
-}
-.road-item::before{
-  content:'';position:absolute;
-  left:-28px;top:6px;
-  width:16px;height:16px;border-radius:50%;
-  background:var(--dot,#F5A623);
-  border:3px solid var(--bg);
-  box-shadow:0 0 0 2px var(--dot,#F5A623);
-}
-.road-item .road-stage{
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;
-  color:var(--dot,#F5A623);text-transform:uppercase;
-  margin-bottom:4px;
-}
-.road-item h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
-.road-item p{font-size:.85rem;color:var(--ink-soft);line-height:1.7}
-
-/* ===== 統計卡 ===== */
-.stats-strip{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:16px;
-  margin-top:36px;
-}
-.stat-box{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:22px;
-  text-align:center;
-  box-shadow:var(--shadow);
-  transition:all .3s;
-}
-.stat-box:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.stat-box .n{
+#loading .logo{
   font-family:'Baloo 2',cursive;
-  font-size:2rem;font-weight:800;
-  background:linear-gradient(120deg,#F5A623,#EF476F);
+  font-size:clamp(2rem,8vw,3.5rem);
+  font-weight:800;text-align:center;
+  background:linear-gradient(120deg,#F5A623,#EF476F,#9B5DE5);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  line-height:1;
-  margin-bottom:6px;
+  animation:pop 1s ease both;
 }
-.stat-box .l{font-size:.78rem;color:var(--ink-soft);font-weight:500}
+#loading .sub{text-align:center;color:#fff;font-size:.9rem;margin-top:12px;opacity:.9}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* ===== Footer ===== */
-.footer{
+/* ===== 開始畫面 ===== */
+#start{
+  background:linear-gradient(160deg,#FFE9C9 0%,#FFD6E8 50%,#D4E8FF 100%);
+  align-items:center;justify-content:center;
+  padding:24px;text-align:center;
+}
+#start .start-inner{max-width:480px;width:100%}
+#start h1{
+  font-family:'Baloo 2',cursive;
+  font-size:clamp(2.2rem,9vw,3.6rem);
+  font-weight:800;line-height:1.05;
+  margin-bottom:8px;
+  background:linear-gradient(120deg,#F5A623,#EF476F,#9B5DE5,#4CC9F0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+#start .tagline{font-size:.9rem;color:#5A5F6E;margin-bottom:36px;font-weight:500}
+#start .pals-preview{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  margin-bottom:36px;
+}
+#start .pals-preview .pp{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;
+  box-shadow:0 6px 16px rgba(80,60,30,.12);
+  animation:bob 2.4s ease-in-out infinite;
+}
+#start .pals-preview .pp:nth-child(2){animation-delay:.2s}
+#start .pals-preview .pp:nth-child(3){animation-delay:.4s}
+#start .pals-preview .pp:nth-child(4){animation-delay:.6s}
+#start .pals-preview .pp:nth-child(5){animation-delay:.8s}
+#start .pals-preview .pp:nth-child(6){animation-delay:1s}
+#start .pals-preview .pp:nth-child(7){animation-delay:1.2s}
+#start .pals-preview .pp:nth-child(8){animation-delay:1.4s}
+#start .pals-preview .pp:nth-child(9){animation-delay:1.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.start-btn{
+  display:block;width:100%;
+  padding:18px 24px;border-radius:999px;
   background:var(--ink);color:#fff;
-  padding:60px 20px 40px;
+  font-size:1.05rem;font-weight:700;
+  box-shadow:0 12px 32px rgba(43,45,66,.3);
+  transition:all .2s;
+  margin-bottom:12px;
+}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(43,45,66,.4)}
+.start-btn.ghost{
+  background:rgba(255,255,255,.85);color:var(--ink);
+  box-shadow:0 6px 20px rgba(80,60,30,.1);
+}
+
+/* ===== 頂欄 ===== */
+.topbar{
+  flex-shrink:0;
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,249,240,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  z-index:10;
+}
+.topbar .tb-left{display:flex;align-items:center;gap:10px;min-width:0}
+.topbar .tb-title{
+  font-family:'Baloo 2',cursive;
+  font-size:1.1rem;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.icon-btn{
+  width:42px;height:42px;border-radius:50%;
+  background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  transition:all .2s;
+  box-shadow:0 2px 8px rgba(80,60,30,.06);
+}
+.icon-btn:hover{transform:scale(1.08)}
+.coin-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 14px;border-radius:999px;
+  background:linear-gradient(120deg,#FFF3D6,#FFE9C9);
+  border:1px solid #F5D89A;
+  font-size:.85rem;font-weight:800;color:#8B6914;
+}
+.coin-pill .cp-emoji{font-size:1rem}
+
+/* ===== 地圖 ===== */
+#map .map-body{
+  flex:1;overflow-y:auto;
+  padding:16px 16px 100px;
+}
+.zone-list{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto}
+.zone-item{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:0 4px 16px rgba(80,60,30,.06);
+  transition:all .25s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.zone-item:hover:not(.locked){
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(80,60,30,.14);
+  border-color:var(--zc);
+}
+.zone-item.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
+.zone-item.cleared::after{
+  content:'✓ 完成';
+  position:absolute;top:10px;right:10px;
+  font-size:.65rem;font-weight:700;
+  padding:3px 10px;border-radius:999px;
+  background:#06D6A0;color:#fff;
+}
+.zone-emoji{
+  width:60px;height:60px;flex-shrink:0;
+  border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;
+  background:linear-gradient(140deg,var(--zc-light),#fff);
+  border:2px solid #fff;
+  box-shadow:0 4px 12px rgba(80,60,30,.08);
+}
+.zone-info{flex:1;min-width:0}
+.zone-name{
+  font-family:'Baloo 2',cursive;
+  font-size:1.15rem;font-weight:800;
+  color:var(--zc);line-height:1.1;
+  margin-bottom:3px;
+}
+.zone-sub{font-size:.78rem;color:var(--soft);margin-bottom:6px}
+.zone-progress{
+  display:flex;gap:4px;
+}
+.zone-progress .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--line);
+}
+.zone-progress .dot.done{background:var(--zc)}
+
+/* ===== 戰鬥畫面 ===== */
+#battle{
+  background:linear-gradient(180deg,#F4F7FB 0%,#FFF9F0 100%);
+}
+#battle .arena{
+  flex:1;
+  display:flex;flex-direction:column;
+  padding:16px;
+  overflow-y:auto;
+  position:relative;
+}
+.arena-stage{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+  padding:16px;
+  background:rgba(255,255,255,.6);
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  backdrop-filter:blur(8px);
+}
+.fighter{
+  flex:1;display:flex;flex-direction:column;align-items:center;
   text-align:center;
 }
-.footer h3{
-  font-family:'Baloo 2',cursive;
-  font-size:1.6rem;font-weight:800;
-  margin-bottom:10px;
-}
-.footer p{color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:24px}
-.footer .footer-pals{
-  display:flex;justify-content:center;gap:12px;
-  flex-wrap:wrap;margin-bottom:32px;
-}
-.footer-pals .fp{
-  width:44px;height:44px;border-radius:50%;
-  background:rgba(255,255,255,.1);
+.fighter .avatar{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;
-  transition:all .3s;
+  border:4px solid var(--fc);
+  box-shadow:0 8px 24px rgba(80,60,30,.15);
+  margin-bottom:8px;
+  transition:transform .2s;
 }
-.footer-pals .fp:hover{transform:scale(1.15) translateY(-4px);background:rgba(255,255,255,.2)}
-.footer-line{
-  font-size:.72rem;color:rgba(255,255,255,.35);
-  margin-top:24px;
+.fighter .avatar svg{width:60px;height:60px}
+.fighter.enemy .avatar{background:#FFE0E9;border-color:#EF476F}
+.fighter .name{
+  font-size:.82rem;font-weight:700;margin-bottom:4px;
+}
+.fighter .hp-bar{
+  width:100%;height:10px;border-radius:999px;
+  background:rgba(0,0,0,.08);overflow:hidden;
+  max-width:120px;
+  position:relative;
+}
+.fighter .hp-fill{
+  height:100%;
+  background:linear-gradient(90deg,#06D6A0,#2EC4B6);
+  border-radius:999px;
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+  width:100%;
+}
+.fighter.enemy .hp-fill{
+  background:linear-gradient(90deg,#EF476F,#F72585);
+}
+.fighter .hp-text{
+  font-size:.68rem;color:var(--soft);margin-top:3px;font-weight:600;
+}
+.vs-badge{
+  font-family:'Baloo 2',cursive;
+  font-size:1.2rem;font-weight:800;
+  color:var(--soft);
+  opacity:.6;
 }
 
-/* ===== 滾動出現動畫 ===== */
-.reveal{
-  opacity:0;transform:translateY(24px);
-  transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);
+/* 戰鬥訊息 */
+.battle-msg{
+  text-align:center;
+  padding:10px 16px;
+  font-size:.85rem;font-weight:600;
+  color:var(--soft);
+  min-height:36px;
+  transition:all .2s;
 }
-.reveal.show{opacity:1;transform:none}
+.battle-msg.good{color:#06D6A0}
+.battle-msg.bad{color:#EF476F}
 
-/* ===== 響應式 ===== */
-@media (max-width:640px){
-  .nav-links a{padding:6px 10px;font-size:.78rem}
-  .section{padding:60px 16px}
-  .pal-avatar{width:64px;height:64px}
-  .pal-avatar svg{width:50px;height:50px}
-  .pal-meta .pal-name{font-size:1.1rem}
+/* 題目卡 */
+.question-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:22px 20px;
+  box-shadow:0 12px 36px rgba(80,60,30,.12);
+  border:1px solid var(--line);
+  max-width:560px;
+  margin:0 auto;
+  width:100%;
+}
+.question-card .q-label{
+  font-size:.7rem;font-weight:700;
+  letter-spacing:.15em;color:var(--soft);
+  margin-bottom:10px;
+  display:flex;justify-content:space-between;
+}
+.question-card .q-label .q-progress{
+  color:var(--fc,#F5A623);
+}
+.question-text{
+  font-size:1rem;font-weight:700;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+.answers{display:flex;flex-direction:column;gap:10px}
+.answer-btn{
+  padding:14px 16px;
+  border-radius:14px;
+  background:#FBF8F3;
+  border:2px solid var(--line);
+  font-size:.88rem;font-weight:500;
+  text-align:left;
+  line-height:1.6;
+  color:var(--ink);
+  transition:all .2s;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.answer-btn:hover:not(:disabled){
+  border-color:var(--fc,#F5A623);
+  background:#fff;
+  transform:translateX(4px);
+}
+.answer-btn .key{
+  flex-shrink:0;
+  width:24px;height:24px;border-radius:50%;
+  background:#EFE7DC;color:var(--soft);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:800;
+  transition:all .2s;
+}
+.answer-btn:hover:not(:disabled) .key{background:var(--fc,#F5A623);color:#fff}
+.answer-btn.correct{
+  border-color:#06D6A0;background:#E8FBF3;
+}
+.answer-btn.correct .key{background:#06D6A0;color:#fff}
+.answer-btn.wrong{
+  border-color:#EF476F;background:#FDE5EC;
+}
+.answer-btn.wrong .key{background:#EF476F;color:#fff}
+.answer-btn:disabled{cursor:default}
+
+/* 結果彈窗 */
+.result-popup{
+  position:fixed;inset:0;
+  background:rgba(20,20,30,.6);
+  backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  z-index:100;padding:24px;
+}
+.result-popup.show{display:flex;animation:fadeIn .3s}
+.result-popup .popup{
+  background:#fff;
+  border-radius:28px;
+  padding:32px 26px;
+  max-width:400px;width:100%;
+  text-align:center;
+  animation:popIn .4s cubic-bezier(.2,1.4,.4,1);
+  box-shadow:0 30px 80px rgba(0,0,0,.3);
+}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.result-popup .popup .popup-emoji{
+  font-size:4rem;display:block;margin-bottom:12px;
+  animation:bob 1.4s ease-in-out infinite;
+}
+.result-popup .popup h2{
+  font-family:'Baloo 2',cursive;
+  font-size:1.8rem;font-weight:800;
+  margin-bottom:8px;
+}
+.result-popup .popup .popup-sub{
+  color:var(--soft);font-size:.9rem;
+  margin-bottom:20px;line-height:1.7;
+}
+.result-popup .popup .popup-rewards{
+  display:flex;justify-content:center;gap:12px;
+  margin-bottom:24px;
+}
+.result-popup .popup .reward{
+  background:#FFF3D6;
+  border:2px solid #F5D89A;
+  border-radius:14px;
+  padding:10px 16px;
+  font-size:.85rem;font-weight:700;
+  color:#8B6914;
+  display:flex;align-items:center;gap:6px;
+}
+.result-popup .popup .popup-actions{
+  display:flex;gap:10px;
+}
+.result-popup .popup .popup-actions button{
+  flex:1;
+  padding:14px 20px;
+  border-radius:999px;
+  font-size:.92rem;font-weight:700;
+}
+.result-popup .popup .popup-actions .btn-primary{
+  background:var(--ink);color:#fff;
+}
+.result-popup .popup .popup-actions .btn-ghost{
+  background:#FBF8F3;color:var(--ink);
+  border:2px solid var(--line);
+}
+
+/* ===== 圖鑑 ===== */
+#dex .dex-body{
+  flex:1;overflow-y:auto;
+  padding:16px 16px 100px;
+}
+.dex-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:12px;
+  max-width:640px;margin:0 auto;
+}
+.dex-card{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:20px;
+  padding:16px 12px;
+  text-align:center;
+  transition:all .25s;
+  position:relative;
+}
+.dex-card.locked{
+  background:#F4F1EC;
+  opacity:.5;
+}
+.dex-card:not(.locked):hover{
+  transform:translateY(-4px);
+  border-color:var(--dc);
+  box-shadow:0 12px 32px rgba(80,60,30,.14);
+}
+.dex-card .dc-avatar{
+  width:70px;height:70px;margin:0 auto 8px;
+  border-radius:50%;
+  background:linear-gradient(140deg,var(--dc-light),#fff);
+  border:3px solid #fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(80,60,30,.1);
+}
+.dex-card .dc-avatar svg{width:52px;height:52px}
+.dex-card.locked .dc-avatar{background:#E8E4DD}
+.dex-card.locked .dc-avatar::before{
+  content:'?';font-size:2rem;font-weight:800;color:#B8B0A0;
+}
+.dex-card .dc-name{
+  font-family:'Baloo 2',cursive;
+  font-size:.9rem;font-weight:800;
+  color:var(--dc);
+  margin-bottom:2px;
+}
+.dex-card.locked .dc-name{color:var(--soft)}
+.dex-card .dc-tag{
+  font-size:.65rem;color:var(--soft);font-weight:600;
+}
+.dex-card .dc-level{
+  position:absolute;top:8px;right:8px;
+  font-size:.6rem;font-weight:800;
+  background:var(--dc);color:#fff;
+  padding:2px 8px;border-radius:999px;
+}
+
+/* ===== 底部導航 ===== */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:50;
+}
+.bottom-nav .nav-item{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;
+  gap:2px;
+  padding:8px;
+  color:var(--soft);
+  font-size:.68rem;font-weight:600;
+  transition:all .2s;
+}
+.bottom-nav .nav-item.active{color:var(--ink)}
+.bottom-nav .nav-item .ni-icon{
+  font-size:1.3rem;line-height:1;
+}
+.bottom-nav .nav-item.active .ni-icon{transform:scale(1.15)}
+
+/* ===== 物理獸選擇 ===== */
+#select .select-body{
+  flex:1;overflow-y:auto;
+  padding:16px 16px 100px;
+}
+.select-hint{
+  text-align:center;color:var(--soft);font-size:.85rem;
+  margin-bottom:16px;
+}
+.select-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:12px;max-width:640px;margin:0 auto;
+}
+.select-card{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:20px;
+  padding:14px 10px;text-align:center;
+  transition:all .25s;
+  cursor:pointer;
+}
+.select-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--sc);
+  box-shadow:0 12px 32px rgba(80,60,30,.14);
+}
+.select-card .sc-avatar{
+  width:64px;height:64px;margin:0 auto 8px;
+  border-radius:50%;
+  background:linear-gradient(140deg,var(--sc-light),#fff);
+  display:flex;align-items:center;justify-content:center;
+  border:3px solid #fff;
+  box-shadow:0 4px 12px rgba(80,60,30,.1);
+}
+.select-card .sc-avatar svg{width:48px;height:48px}
+.select-card .sc-name{
+  font-family:'Baloo 2',cursive;
+  font-size:.88rem;font-weight:800;color:var(--sc);
+  margin-bottom:2px;
+}
+.select-card .sc-lv{
+  font-size:.65rem;color:var(--soft);font-weight:600;
+}
+
+/* ===== 提示 ===== */
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:var(--ink);color:#fff;
+  padding:12px 22px;border-radius:999px;
+  font-size:.85rem;font-weight:600;
+  z-index:200;
+  box-shadow:0 12px 32px rgba(0,0,0,.2);
+  transition:transform .3s cubic-bezier(.2,1.4,.4,1);
+  pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== 攻擊動畫 ===== */
+@keyframes attackRight{
+  0%{transform:translateX(0)}
+  40%{transform:translateX(30px) scale(1.05)}
+  100%{transform:translateX(0)}
+}
+@keyframes attackLeft{
+  0%{transform:translateX(0)}
+  40%{transform:translateX(-30px) scale(1.05)}
+  100%{transform:translateX(0)}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.attack-r{animation:attackRight .4s ease}
+.attack-l{animation:attackLeft .4s ease}
+.shake{animation:shake .4s ease}
+
+@media(max-width:480px){
+  .fighter .avatar{width:68px;height:68px}
+  .fighter .avatar svg{width:52px;height:52px}
+  .question-card{padding:18px 16px}
+  .answer-btn{padding:12px 14px;font-size:.84rem}
 }
 </style>
 </head>
 <body>
 
-<!-- ===== 導航 ===== -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="#top" class="nav-logo">
-      <span class="dot"></span>
-      Physics Pals
-    </a>
-    <div class="nav-links">
-      <a href="#summary">摘要</a>
-      <a href="#pals">物理獸</a>
-      <a href="#island">物理島</a>
-      <a href="#modes">玩法</a>
-      <a href="#quiz">題目</a>
-      <a href="#roadmap">路線</a>
-    </div>
+<!-- ===== 載入 ===== -->
+<div class="screen active" id="loading">
+  <div>
+    <div class="logo">⚡ Physics Pals</div>
+    <div class="sub">載入中...</div>
   </div>
-</nav>
+</div>
 
-<!-- ===== Hero ===== -->
-<header class="hero" id="top">
-  <div class="hero-bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+<!-- ===== 開始 ===== -->
+<div class="screen" id="start">
+  <div class="start-inner">
+    <h1>物理獸 DSE</h1>
+    <p class="tagline">可愛養成 × 物理解謎 × DSE 訓練</p>
+    <div class="pals-preview">
+      <div class="pp">🐱</div>
+      <div class="pp">⚡</div>
+      <div class="pp">🐰</div>
+      <div class="pp">🐧</div>
+      <div class="pp">🐻</div>
+      <div class="pp">🦉</div>
+      <div class="pp">🦊</div>
+      <div class="pp">🦦</div>
+      <div class="pp">🐶</div>
+    </div>
+    <button class="start-btn" id="btnNewGame">開始新遊戲</button>
+    <button class="start-btn ghost" id="btnContinue" style="display:none">繼續遊戲</button>
   </div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="live"></span>
-      DSE Physics · 遊戲企劃書 v1.0
-    </div>
-    <h1>
-      物理獸 DSE<br>
-      <span class="grad">Physics Pals 實驗室</span>
-    </h1>
-    <h2>可愛養成 × 物理解謎 × DSE 精確訓練</h2>
-    <div class="hero-buttons">
-      <a href="#pals" class="btn btn-primary">探索物理獸 →</a>
-      <a href="#quiz" class="btn btn-ghost">睇題目範例</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="num">9</div>
-        <div class="lbl">物理獸角色</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">9</div>
-        <div class="lbl">DSE 課題地區</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">1000+</div>
-        <div class="lbl">題庫目標</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">3</div>
-        <div class="lbl">平台同步</div>
-      </div>
-    </div>
-  </div>
-</header>
+</div>
 
-<!-- ===== 一頁摘要 ===== -->
-<section class="section" id="summary">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">ONE-PAGE SUMMARY</span>
-      <h2>一頁睇晒成個企劃</h2>
-      <p>核心賣點、目標玩家、學習目標、設計原則，全部一目了然。</p>
+<!-- ===== 主畫面（地圖/圖鑑） ===== -->
+<div class="screen" id="main">
+  <!-- 地圖頁 -->
+  <div id="map" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-title">🗺️ 物理島</div>
+      </div>
+      <div class="tb-right">
+        <div class="coin-pill">
+          <span class="cp-emoji">⚡</span>
+          <span id="coinCount">0</span>
+        </div>
+      </div>
     </div>
-    <div class="summary-grid">
-      <div class="summary-card reveal" style="--c1:#F5A623;--c2:#FFD166">
-        <div class="sc-icon">🎮</div>
-        <h3>遊戲類型</h3>
-        <p>2D 可愛養成 × 物理解謎 × DSE 溫習遊戲，適合中四至中六物理學生。</p>
+    <div class="map-body">
+      <div class="zone-list" id="zoneList"></div>
+    </div>
+  </div>
+
+  <!-- 圖鑑頁 -->
+  <div id="dex" style="display:none;flex-direction:column;flex:1;overflow:hidden">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-title">📖 物理獸圖鑑</div>
       </div>
-      <div class="summary-card reveal" style="--c1:#4CC9F0;--c2:#2EC4B6">
-        <div class="sc-icon">📱</div>
-        <h3>平台</h3>
-        <p>iOS / Android / Web，後期可上 Steam，支援離線基本關卡。</p>
-      </div>
-      <div class="summary-card reveal" style="--c1:#EF476F;--c2:#F72585">
-        <div class="sc-icon">🐾</div>
-        <h3>核心賣點</h3>
-        <p>可愛物理獸代表每個課題，題目精確對應 DSE，重應用、重概念、重陷阱。</p>
-      </div>
-      <div class="summary-card reveal" style="--c1:#9B5DE5;--c2:#B892FF">
-        <div class="sc-icon">🧪</div>
-        <h3>學習目標</h3>
-        <p>準確運用公式、理解概念、分辨錯誤觀念、應付 Paper 1A / 1B / 2。</p>
-      </div>
-      <div class="summary-card reveal" style="--c1:#06D6A0;--c2:#2EC4B6">
-        <div class="sc-icon">🎯</div>
-        <h3>設計原則</h3>
-        <p>精確：所有公式、單位、有效數字按 DSE 要求。有趣：可愛角色、進化、Boss 戰。</p>
-      </div>
-      <div class="summary-card reveal" style="--c1:#FF9F1C;--c2:#FFD166">
-        <div class="sc-icon">🌏</div>
-        <h3>應用導向</h3>
-        <p>港鐵煞車、無線充電、微波爐、核電、天文、醫療影像，物理就在日常。</p>
+    </div>
+    <div class="dex-body">
+      <div class="dex-grid" id="dexGrid"></div>
+    </div>
+  </div>
+
+  <!-- 底部導航 -->
+  <div class="bottom-nav">
+    <button class="nav-item active" data-page="map">
+      <span class="ni-icon">🗺️</span>
+      <span>地圖</span>
+    </button>
+    <button class="nav-item" data-page="dex">
+      <span class="ni-icon">📖</span>
+      <span>圖鑑</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== 物理獸選擇 ===== -->
+<div class="screen" id="select">
+  <div class="topbar">
+    <div class="tb-left">
+      <button class="icon-btn" id="btnBackFromSelect">←</button>
+      <div class="tb-title" id="selectTitle">選擇物理獸</div>
+    </div>
+  </div>
+  <div class="select-body">
+    <p class="select-hint">揀一隻物理獸出戰，答對越多，佢升級越快！</p>
+    <div class="select-grid" id="selectGrid"></div>
+  </div>
+</div>
+
+<!-- ===== 戰鬥 ===== -->
+<div class="screen" id="battle">
+  <div class="topbar">
+    <div class="tb-left">
+      <button class="icon-btn" id="btnQuitBattle">←</button>
+      <div class="tb-title" id="battleTitle">戰鬥中</div>
+    </div>
+    <div class="tb-right">
+      <div class="coin-pill">
+        <span class="cp-emoji">⚡</span>
+        <span id="coinCountBattle">0</span>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ===== 物理獸圖鑑 ===== -->
-<section class="section" id="pals">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">PHYSICS PALS</span>
-      <h2>九隻物理獸圖鑑</h2>
-      <p>每一隻代表一個 DSE Physics 課題，有自己嘅性格、口頭禪、配色同技能。</p>
-    </div>
-    <div class="pals-grid" id="palsGrid"></div>
-  </div>
-</section>
-
-<!-- ===== 物理島地圖 ===== -->
-<section class="section" id="island">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">PHYSICS ISLAND</span>
-      <h2>物理島地圖</h2>
-      <p>九個地區，對應九個 DSE 課題。玩家要逐一修復，最後挑戰「DSE 終極試煉塔」。</p>
-    </div>
-    <div class="island reveal">
-      <div class="island-grid" id="islandGrid"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 玩法 ===== -->
-<section class="section" id="modes">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">GAME MODES</span>
-      <h2>八種遊戲模式</h2>
-      <p>由故事模式到 DSE 模擬試，由個人養成到老師班級系統，一應俱全。</p>
-    </div>
-    <div class="modes-grid" id="modesGrid"></div>
-  </div>
-</section>
-
-<!-- ===== 題目範例 ===== -->
-<section class="section" id="quiz">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">SAMPLE QUESTIONS</span>
-      <h2>六題 DSE 範例</h2>
-      <p>點擊展開答案同詳解。每題都有具體情境，唔係單純「代入公式」。</p>
-    </div>
-    <div class="quiz-list" id="quizList"></div>
-  </div>
-</section>
-
-<!-- ===== 開發路線 ===== -->
-<section class="section" id="roadmap">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-tag">ROADMAP</span>
-      <h2>24 個月開發路線</h2>
-      <p>由概念原型到正式推出，最後持續更新題庫同角色。</p>
-    </div>
-    <div class="roadmap" id="roadmapList"></div>
-
-    <div class="stats-strip reveal">
-      <div class="stat-box">
-        <div class="n">1000+</div>
-        <div class="l">題庫目標</div>
+  <div class="arena">
+    <!-- 戰鬥舞台 -->
+    <div class="arena-stage">
+      <div class="fighter enemy" id="enemyFighter">
+        <div class="avatar" id="enemyAvatar">👾</div>
+        <div class="name" id="enemyName">迷思獸</div>
+        <div class="hp-bar"><div class="hp-fill" id="enemyHp"></div></div>
+        <div class="hp-text" id="enemyHpText">100 / 100</div>
       </div>
-      <div class="stat-box">
-        <div class="n">9</div>
-        <div class="l">課題地區</div>
-      </div>
-      <div class="stat-box">
-        <div class="n">24</div>
-        <div class="l">開發月數</div>
-      </div>
-      <div class="stat-box">
-        <div class="n">3</div>
-        <div class="l">平台同步</div>
+      <div class="vs-badge">VS</div>
+      <div class="fighter" id="playerFighter">
+        <div class="avatar" id="playerAvatar">🐱</div>
+        <div class="name" id="playerName">牛牛 Sir</div>
+        <div class="hp-bar"><div class="hp-fill" id="playerHp"></div></div>
+        <div class="hp-text" id="playerHpText">100 / 100</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ===== Footer ===== -->
-<footer class="footer">
-  <h3>⚡ Physics Pals 實驗室</h3>
-  <p>可愛養成 × 物理解謎 × DSE 精確訓練</p>
-  <div class="footer-pals">
-    <div class="fp" title="牛牛 Sir">🐱</div>
-    <div class="fp" title="電電">⚡</div>
-    <div class="fp" title="波波">🐰</div>
-    <div class="fp" title="熱熱">🐧</div>
-    <div class="fp" title="核核">🐻</div>
-    <div class="fp" title="星星">🦉</div>
-    <div class="fp" title="原子狐">🦊</div>
-    <div class="fp" title="能量水獺">🦦</div>
-    <div class="fp" title="醫醫狗">🐶</div>
+    <div class="battle-msg" id="battleMsg">準備戰鬥...</div>
+
+    <!-- 題目 -->
+    <div class="question-card" id="questionCard">
+      <div class="q-label">
+        <span id="qCategory">FORCE & MOTION</span>
+        <span class="q-progress" id="qProgress">1 / 5</span>
+      </div>
+      <div class="question-text" id="questionText">載入中...</div>
+      <div class="answers" id="answers"></div>
+    </div>
   </div>
-  <div class="footer-line">© 2025 Physics Pals · 遊戲企劃書 · 未經授權不得轉載</div>
-</footer>
+</div>
+
+<!-- ===== 結算彈窗 ===== -->
+<div class="result-popup" id="resultPopup">
+  <div class="popup">
+    <span class="popup-emoji" id="popupEmoji">🏆</span>
+    <h2 id="popupTitle">勝利！</h2>
+    <p class="popup-sub" id="popupSub">你打敗咗迷思獸！</p>
+    <div class="popup-rewards" id="popupRewards"></div>
+    <div class="popup-actions">
+      <button class="btn-ghost" id="popupBack">返回地圖</button>
+      <button class="btn-primary" id="popupRetry">再打一次</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast"></div>
 
 <script>
 /* ============================================================
    物理獸資料
    ============================================================ */
 var PALS = [
-  {
-    key:'newton', name:'牛牛 Sir', en:'Newton Cat',
-    tag:'Force & Motion',
-    color:'#F5A623', colorLight:'#FFF3D6',
-    desc:'橙白貓，頭頂蘋果，尾巴係向量箭嘴，頸圈寫住 F=ma。衝動但可靠，成日講「睇淨力先！」',
-    quote:'「唔好低估淨力呀！」',
-    skills:['力圖分析','動量衝刺','能量守恆'],
-    emoji:'🐱'
-  },
-  {
-    key:'zappy', name:'電電', en:'Zappy Eel',
-    tag:'Electricity & Magnetism',
-    color:'#FFB703', colorLight:'#FFF6DD',
-    desc:'黃色電鰻，藍色閃電紋，背住小型電路板，尾巴係插頭。活潑，成日靜電，鍾意整電路。',
-    quote:'「電壓係每單位電荷嘅能量！」',
-    skills:['歐姆定律','磁場環','電磁感應'],
-    emoji:'⚡'
-  },
-  {
-    key:'wavey', name:'波波', en:'Wavey Rabbit',
-    tag:'Wave Motion',
-    color:'#2EC4B6', colorLight:'#E0F7F4',
-    desc:'長耳呈正弦波，手持音叉，眼鏡係干涉條紋。溫柔，鍾意音樂同光。',
-    quote:'「頻率不變，波速先變！」',
-    skills:['干涉','衍射','駐波','折射'],
-    emoji:'🐰'
-  },
-  {
-    key:'thermo', name:'熱熱', en:'Thermo Penguin',
-    tag:'Heat & Gases',
-    color:'#EF476F', colorLight:'#FDE5EC',
-    desc:'企鵝，紅白頸巾，溫度計帽，手掌有冰同火圖案。外冷內熱。',
-    quote:'「熱係能量轉移，唔係物質！」',
-    skills:['比熱容量','潛熱','氣體定律'],
-    emoji:'🐧'
-  },
-  {
-    key:'nuky', name:'核核', en:'Nuky Bear',
-    tag:'Radioactivity & Nuclear',
-    color:'#8AC926', colorLight:'#EDF8D4',
-    desc:'綠色防護衣，蓋革計數器背包，耳仔有輻射標誌。小心謹慎。',
-    quote:'「半衰期唔受溫度影響㗎！」',
-    skills:['半衰期','屏蔽','核裂變','核融合'],
-    emoji:'🐻'
-  },
-  {
-    key:'astro', name:'星星', en:'Astro Owl',
-    tag:'Astronomy & Space',
-    color:'#4A6FA5', colorLight:'#E4EAF5',
-    desc:'深藍羽毛，望遠鏡眼，翅膀有星圖。博學，夜貓子。',
-    quote:'「軌道速度決定你飛唔飛得出地球！」',
-    skills:['軌道','重力','紅移','宇宙膨脹'],
-    emoji:'🦉'
-  },
-  {
-    key:'atomi', name:'原子狐', en:'Atomi Fox',
-    tag:'Atomic World',
-    color:'#F72585', colorLight:'#FDE0EE',
-    desc:'尾巴係電子軌道，耳尖有光子，戴護目鏡。好奇。',
-    quote:'「光子能量取決於頻率，唔係強度！」',
-    skills:['光電效應','能階','光譜'],
-    emoji:'🦊'
-  },
-  {
-    key:'joule', name:'能量水獺', en:'Joule Otter',
-    tag:'Energy & Use of Energy',
-    color:'#FF9F1C', colorLight:'#FFEED4',
-    desc:'手持風車，背住太陽能板，尾巴有水波紋。節儉，鍾意可再生能源。',
-    quote:'「效率永遠細過 100%！」',
-    skills:['能源效率','功率','再生能源'],
-    emoji:'🦦'
-  },
-  {
-    key:'meddy', name:'醫醫狗', en:'Meddy Dog',
-    tag:'Medical Physics',
-    color:'#00B4D8', colorLight:'#D6F2FA',
-    desc:'醫生袍，聽診器，X 光眼鏡。細心，照顧人。',
-    quote:'「影像對比度同衰減有關！」',
-    skills:['X 光','超聲波','放射治療','劑量'],
-    emoji:'🐶'
-  }
+  {key:'newton', name:'牛牛 Sir', en:'Newton Cat', color:'#F5A623', light:'#FFF3D6',
+   zone:'牛頓競技場', emoji:'🐱',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="26" ry="22" fill="#F5A623"/><circle cx="50" cy="44" r="18" fill="#F5A623"/><path d="M 34 32 L 30 20 L 42 28 Z" fill="#F5A623"/><path d="M 66 32 L 70 20 L 58 28 Z" fill="#F5A623"/><circle cx="50" cy="30" r="7" fill="#E63946"/><path d="M 50 24 Q 52 20 54 24" stroke="#4A7C2F" stroke-width="2" fill="none"/><circle cx="44" cy="44" r="2.5" fill="#2c2c2c"/><circle cx="56" cy="44" r="2.5" fill="#2c2c2c"/><path d="M 46 52 Q 50 55 54 52" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'},
+  {key:'zappy', name:'電電', en:'Zappy Eel', color:'#FFB703', light:'#FFF6DD',
+   zone:'電磁都市', emoji:'⚡',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="30" ry="20" fill="#FFB703"/><path d="M 20 58 Q 30 50 50 58 Q 70 66 80 58" stroke="#3A0CA3" stroke-width="3" fill="none"/><circle cx="42" cy="48" r="3" fill="#2c2c2c"/><circle cx="58" cy="48" r="3" fill="#2c2c2c"/><path d="M 44 60 Q 50 64 56 60" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 78 60 L 84 56 L 82 62 L 88 60" stroke="#3A0CA3" stroke-width="2" fill="none"/></svg>'},
+  {key:'wavey', name:'波波', en:'Wavey Rabbit', color:'#2EC4B6', light:'#E0F7F4',
+   zone:'波動湖', emoji:'🐰',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="56" r="22" fill="#2EC4B6"/><path d="M 38 30 Q 42 14 46 30 Q 50 46 54 30 Q 58 14 62 30" stroke="#2EC4B6" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="42" cy="52" r="3" fill="#2c2c2c"/><circle cx="58" cy="52" r="3" fill="#2c2c2c"/><path d="M 45 62 Q 50 66 55 62" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'},
+  {key:'thermo', name:'熱熱', en:'Thermo Penguin', color:'#EF476F', light:'#FDE5EC',
+   zone:'熱力溫泉', emoji:'🐧',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="22" ry="24" fill="#EF476F"/><circle cx="50" cy="40" r="17" fill="#EF476F"/><ellipse cx="50" cy="60" rx="12" ry="16" fill="#fff"/><circle cx="44" cy="38" r="3" fill="#2c2c2c"/><circle cx="56" cy="38" r="3" fill="#2c2c2c"/><path d="M 50 42 L 54 46 L 50 50 L 46 46 Z" fill="#FFD166"/></svg>'},
+  {key:'nuky', name:'核核', en:'Nuky Bear', color:'#8AC926', light:'#EDF8D4',
+   zone:'核能洞穴', emoji:'🐻',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="46" r="20" fill="#8AC926"/><circle cx="50" cy="70" r="18" fill="#8AC926"/><circle cx="36" cy="32" r="8" fill="#8AC926"/><circle cx="64" cy="32" r="8" fill="#8AC926"/><circle cx="36" cy="32" r="3" fill="#FFD60A"/><circle cx="64" cy="32" r="3" fill="#FFD60A"/><circle cx="44" cy="42" r="3" fill="#2c2c2c"/><circle cx="56" cy="42" r="3" fill="#2c2c2c"/><ellipse cx="50" cy="52" rx="4" ry="2.5" fill="#2c2c2c"/></svg>'},
+  {key:'astro', name:'星星', en:'Astro Owl', color:'#4A6FA5', light:'#E4EAF5',
+   zone:'星空天文台', emoji:'🦉',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="24" ry="22" fill="#4A6FA5"/><circle cx="50" cy="42" r="18" fill="#4A6FA5"/><circle cx="42" cy="40" r="8" fill="#E0E1DD"/><circle cx="58" cy="40" r="8" fill="#E0E1DD"/><circle cx="42" cy="40" r="3" fill="#1B263B"/><circle cx="58" cy="40" r="3" fill="#1B263B"/><path d="M 50 50 L 46 56 L 54 56 Z" fill="#FFD60A"/></svg>'},
+  {key:'atomi', name:'原子狐', en:'Atomi Fox', color:'#F72585', light:'#FDE0EE',
+   zone:'原子工坊', emoji:'🦊',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="54" r="20" fill="#F72585"/><path d="M 30 40 L 24 28 L 38 36 Z" fill="#F72585"/><path d="M 70 40 L 76 28 L 62 36 Z" fill="#F72585"/><circle cx="42" cy="50" r="3" fill="#2c2c2c"/><circle cx="58" cy="50" r="3" fill="#2c2c2c"/><ellipse cx="50" cy="60" rx="3.5" ry="2.5" fill="#2c2c2c"/><ellipse cx="50" cy="78" rx="16" ry="5" fill="none" stroke="#4CC9F0" stroke-width="2"/><circle cx="66" cy="78" r="2.5" fill="#4CC9F0"/><circle cx="34" cy="78" r="2.5" fill="#4CC9F0"/></svg>'},
+  {key:'joule', name:'能量水獺', en:'Joule Otter', color:'#FF9F1C', light:'#FFEED4',
+   zone:'能源綠洲', emoji:'🦦',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="60" rx="24" ry="18" fill="#FF9F1C"/><circle cx="50" cy="42" r="16" fill="#FF9F1C"/><circle cx="36" cy="32" r="6" fill="#FF9F1C"/><circle cx="64" cy="32" r="6" fill="#FF9F1C"/><circle cx="44" cy="40" r="2.5" fill="#2c2c2c"/><circle cx="56" cy="40" r="2.5" fill="#2c2c2c"/><ellipse cx="50" cy="48" rx="3" ry="2" fill="#2c2c2c"/><path d="M 78 50 L 82 44 L 86 50 L 90 44" stroke="#2EC4B6" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>'},
+  {key:'meddy', name:'醫醫狗', en:'Meddy Dog', color:'#00B4D8', light:'#D6F2FA',
+   zone:'醫療中心', emoji:'🐶',
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="24" ry="22" fill="#00B4D8"/><circle cx="50" cy="40" r="17" fill="#00B4D8"/><path d="M 33 30 L 28 20 L 40 28 Z" fill="#00B4D8"/><path d="M 67 30 L 72 20 L 60 28 Z" fill="#00B4D8"/><circle cx="43" cy="38" r="3" fill="#2c2c2c"/><circle cx="57" cy="38" r="3" fill="#2c2c2c"/><ellipse cx="50" cy="46" rx="3.5" ry="2.5" fill="#2c2c2c"/><rect x="38" y="58" width="24" height="20" rx="3" fill="#fff"/><path d="M 50 62 L 50 74 M 44 68 L 56 68" stroke="#00B4D8" stroke-width="2"/></svg>'}
 ];
 
 /* ============================================================
    物理島地區
    ============================================================ */
 var ZONES = [
-  {name:'熱力溫泉', sub:'Heat and Gases', emoji:'♨️', color:'#EF476F'},
-  {name:'牛頓競技場', sub:'Force and Motion', emoji:'🏟️', color:'#F5A623'},
-  {name:'波動湖', sub:'Wave Motion', emoji:'🌊', color:'#2EC4B6'},
-  {name:'電磁都市', sub:'Electricity & Magnetism', emoji:'🏙️', color:'#FFB703'},
-  {name:'核能洞穴', sub:'Radioactivity & Nuclear', emoji:'☢️', color:'#8AC926'},
-  {name:'星空天文台', sub:'Astronomy & Space', emoji:'🔭', color:'#4A6FA5'},
-  {name:'原子工坊', sub:'Atomic World', emoji:'⚛️', color:'#F72585'},
-  {name:'能源綠洲', sub:'Energy & Use of Energy', emoji:'🌱', color:'#FF9F1C'},
-  {name:'醫療中心', sub:'Medical Physics', emoji:'🏥', color:'#00B4D8'}
+  {id:'newton', name:'牛頓競技場', sub:'Force and Motion', emoji:'🏟️', color:'#F5A623', light:'#FFF3D6', pal:'newton', required:0,
+   enemy:{emoji:'👹', name:'迷思獸 · 力力'}},
+  {id:'thermo', name:'熱力溫泉', sub:'Heat and Gases', emoji:'♨️', color:'#EF476F', light:'#FDE5EC', pal:'thermo', required:1,
+   enemy:{emoji:'🌡️', name:'迷思獸 · 熱熱怪'}},
+  {id:'wavey', name:'波動湖', sub:'Wave Motion', emoji:'🌊', color:'#2EC4B6', light:'#E0F7F4', pal:'wavey', required:2,
+   enemy:{emoji:'🎵', name:'迷思獸 · 波波妖'}},
+  {id:'zappy', name:'電磁都市', sub:'Electricity & Magnetism', emoji:'🏙️', color:'#FFB703', light:'#FFF6DD', pal:'zappy', required:3,
+   enemy:{emoji:'⚡', name:'迷思獸 · 電電魔'}},
+  {id:'nuky', name:'核能洞穴', sub:'Radioactivity & Nuclear', emoji:'☢️', color:'#8AC926', light:'#EDF8D4', pal:'nuky', required:4,
+   enemy:{emoji:'☢️', name:'迷思獸 · 輻射獸'}},
+  {id:'astro', name:'星空天文台', sub:'Astronomy & Space', emoji:'🔭', color:'#4A6FA5', light:'#E4EAF5', pal:'astro', required:5,
+   enemy:{emoji:'🌌', name:'迷思獸 · 黑洞'}},
+  {id:'atomi', name:'原子工坊', sub:'Atomic World', emoji:'⚛️', color:'#F72585', light:'#FDE0EE', pal:'atomi', required:6,
+   enemy:{emoji:'⚛️', name:'迷思獸 · 量子狐'}},
+  {id:'joule', name:'能源綠洲', sub:'Energy & Use of Energy', emoji:'🌱', color:'#FF9F1C', light:'#FFEED4', pal:'joule', required:7,
+   enemy:{emoji:'🔥', name:'迷思獸 · 浪費獸'}},
+  {id:'meddy', name:'醫療中心', sub:'Medical Physics', emoji:'🏥', color:'#00B4D8', light:'#D6F2FA', pal:'meddy', required:8,
+   enemy:{emoji:'💊', name:'迷思獸 · 輻射狗'}}
 ];
 
 /* ============================================================
-   遊戲模式
+   題庫（每個地區 5 題，共 45 題）
    ============================================================ */
-var MODES = [
-  {emoji:'📖', name:'故事模式', desc:'每個課題有 5–8 關，最後打 Boss，跟住物理島劇情推進。'},
-  {emoji:'🎯', name:'每日挑戰', desc:'每日 3 題，限時作答，有獎勵同連續登入加成。'},
-  {emoji:'🧪', name:'實驗室模式', desc:'虛擬實驗：電路、光學、氣體、放射性，拖拽操作。'},
-  {emoji:'📕', name:'錯題本', desc:'自動收集錯題，用 spaced repetition 重練，直至掌握。'},
-  {emoji:'📝', name:'DSE 模擬試', desc:'Paper 1A、1B、2，計時、評分、報告，模擬真實考場。'},
-  {emoji:'⚔️', name:'多人模式', desc:'1v1 搶答、合作解題，同朋友一齊溫書。'},
-  {emoji:'🏫', name:'公會／班級', desc:'老師開班、派題、睇進度，班級排行榜。'},
-  {emoji:'🐾', name:'養成系統', desc:'餵能量粒子、進化、換裝、佈置實驗室。'}
-];
+var QUESTIONS = {
+  newton:[
+    {q:'2 kg 蘋果箱，施加 10 N 力，摩擦力 4 N，加速度係幾多？',a:['3 m/s²','5 m/s²','7 m/s²','2 m/s²'],c:0},
+    {q:'一個物體等速運動，代表以下邊項？',a:['淨力為零','冇力作用','加速度最大','速度最大'],c:0},
+    {q:'動量守恆定律適用喺邊種情況？',a:['系統冇外力','系統有摩擦力','系統加速','系統靜止'],c:0},
+    {q:'一個 5 kg 物體自由落體，重力加速度 10 m/s²，重力係？',a:['50 N','5 N','0.5 N','500 N'],c:0},
+    {q:'F=ma 中嘅 F 代表？',a:['淨力','摩擦力','重力','張力'],c:0}
+  ],
+  thermo:[
+    {q:'0.5 kg 20°C 水混合 0.3 kg 80°C 水，最終溫度？',a:['42.5°C','50°C','35°C','60°C'],c:0},
+    {q:'熱係咩？',a:['能量轉移','物質','溫度','分子'],c:0},
+    {q:'理想氣體 PV/T = 常數，叫咩定律？',a:['聯合氣體定律','波以耳定律','查理定律','理想氣體定律'],c:0},
+    {q:'比熱容量嘅單位係？',a:['J/kg/°C','J','W','N'],c:0},
+    {q:'冰熔化成水，需要吸收咩？',a:['潛熱','比熱','動能','位能'],c:0}
+  ],
+  wavey:[
+    {q:'聲波頻率 440 Hz，聲速 340 m/s，波長？',a:['0.773 m','0.5 m','1.0 m','0.3 m'],c:0},
+    {q:'波由一個介質進入另一介質，邊項不變？',a:['頻率','波速','波長','振幅'],c:0},
+    {q:'光嘅干涉現象證明咩？',a:['光係波','光係粒子','光有質量','光有電荷'],c:0},
+    {q:'駐波嘅波節位置有咩特徵？',a:['振幅為零','振幅最大','頻率最高','波速最快'],c:0},
+    {q:'超聲波頻率高於？',a:['20000 Hz','20 Hz','200 Hz','2000 Hz'],c:0}
+  ],
+  zappy:[
+    {q:'6Ω 同 3Ω 並聯，等效電阻？',a:['2Ω','9Ω','18Ω','3Ω'],c:0},
+    {q:'電壓嘅定義係？',a:['每單位電荷嘅能量','電流乘電阻','電荷乘時間','功率除電阻'],c:0},
+    {q:'歐姆定律 V = ?',a:['IR','I/R','R/I','I²R'],c:0},
+    {q:'電磁感應由邊個發現？',a:['法拉第','歐姆','安培','庫倫'],c:0},
+    {q:'變壓器可以改變咩？',a:['電壓','頻率','電荷','電阻'],c:0}
+  ],
+  nuky:[
+    {q:'初始活度 800 Bq，半衰期 5 日，15 日後活度？',a:['100 Bq','200 Bq','400 Bq','50 Bq'],c:0},
+    {q:'α 粒子係咩？',a:['氦原子核','電子','光子','中子'],c:0},
+    {q:'半衰期會受溫度影響嗎？',a:['唔會','會','高溫縮短','低溫延長'],c:0},
+    {q:'核裂變會釋放咩？',a:['能量','質量','電荷','光子'],c:0},
+    {q:'γ 射線嘅穿透力比 α 粒子？',a:['強','弱','一樣','視情況'],c:0}
+  ],
+  astro:[
+    {q:'地球軌道速度大約係？',a:['8 km/s','3 km/s','15 km/s','1 km/s'],c:0},
+    {q:'宇宙膨脹嘅證據係？',a:['紅移','藍移','重力','光譜'],c:0},
+    {q:'重力加速度 g 喺地球表面大約係？',a:['9.8 m/s²','10 m/s²','8 m/s²','12 m/s²'],c:0},
+    {q:'逃逸速度取決於？',a:['天體質量同半徑','溫度','大氣','時間'],c:0},
+    {q:'光年係咩單位？',a:['距離','時間','速度','質量'],c:0}
+  ],
+  atomi:[
+    {q:'功函數 2.0 eV，光頻率 1.0×10¹⁵ Hz，最大動能？',a:['2.14 eV','4.14 eV','2.0 eV','6.14 eV'],c:0},
+    {q:'光電效應證明光有咩性質？',a:['粒子性','波動性','質量','電荷'],c:0},
+    {q:'光子能量取決於？',a:['頻率','強度','波長','速度'],c:0},
+    {q:'能階躍遷會釋放或吸收咩？',a:['光子','電子','中子','質子'],c:0},
+    {q:'氫原子光譜屬於？',a:['線狀光譜','連續光譜','吸收光譜','帶狀光譜'],c:0}
+  ],
+  joule:[
+    {q:'功率嘅單位係？',a:['W','J','N','V'],c:0},
+    {q:'能源效率永遠？',a:['細於 100%','等於 100%','大於 100%','等於 0'],c:0},
+    {q:'邊種係可再生能源？',a:['太陽能','煤','石油','天然氣'],c:0},
+    {q:'功率 = 能量 ÷ ?',a:['時間','距離','力','質量'],c:0},
+    {q:'1 kWh 等於幾多 J？',a:['3.6×10⁶ J','1000 J','3600 J','60 J'],c:0}
+  ],
+  meddy:[
+    {q:'X 光影像對比度取決於？',a:['組織衰減差異','時間','溫度','電流'],c:0},
+    {q:'超聲波檢查用嘅頻率大約？',a:['1–10 MHz','20 Hz','100 Hz','1000 Hz'],c:0},
+    {q:'放射治療用嘅射線主要係？',a:['X 光 / γ 射線','α 粒子','β 粒子','聲波'],c:0},
+    {q:'輻射劑量單位係？',a:['Sv','W','J','V'],c:0},
+    {q:'超聲波對人體有咩好處？',a:['非侵入性','有輻射','高成本','低解析度'],c:0}
+  ]
+};
 
 /* ============================================================
-   題目範例
+   遊戲狀態
    ============================================================ */
-var QUIZZES = [
-  {
-    emoji:'🍎', color:'#F5A623', colorLight:'#FFF3D6',
-    title:'牛頓競技場 1-3「搬運蘋果」',
-    subtitle:'Force and Motion · 計算題',
-    question:'牛牛 Sir 要將 2 kg 蘋果箱推去市場，施加 10 N 力，摩擦力 4 N。加速度係幾多？',
-    answer:'淨力 = 10 − 4 = <strong>6 N</strong><br>a = F/m = 6/2 = <strong>3 m/s²</strong><br><br>提示：先畫力圖，計淨力，再代入 <span class="formula">F = ma</span>。'
-  },
-  {
-    emoji:'♨️', color:'#EF476F', colorLight:'#FDE5EC',
-    title:'熱力溫泉 2-2「混合溫泉」',
-    subtitle:'Heat and Gases · 計算題',
-    question:'熱熱要將 0.5 kg 20°C 水同 0.3 kg 80°C 水混合。最終溫度？',
-    answer:'Q gained = Q lost<br>0.5 × 4200 × (T − 20) = 0.3 × 4200 × (80 − T)<br>0.5T − 10 = 24 − 0.3T<br>0.8T = 34<br>T = <strong>42.5°C</strong>'
-  },
-  {
-    emoji:'🎵', color:'#2EC4B6', colorLight:'#E0F7F4',
-    title:'波動湖 1-2「音叉調音」',
-    subtitle:'Wave Motion · 計算題',
-    question:'聲波頻率 440 Hz，聲速 340 m/s，波長？',
-    answer:'λ = v/f = 340/440 = <strong>0.773 m</strong><br><br>玩法：拖動音叉，直至波長吻合。'
-  },
-  {
-    emoji:'🔌', color:'#FFB703', colorLight:'#FFF6DD',
-    title:'電磁都市 3-1「並聯電路」',
-    subtitle:'Electricity & Magnetism · 計算題',
-    question:'6Ω 同 3Ω 並聯，接 12V 電源，總電流？',
-    answer:'1/R = 1/6 + 1/3 = 1/2<br>R = <strong>2Ω</strong><br>I = V/R = 12/2 = <strong>6 A</strong><br><br>玩法：拖線連接電路，計總電流。'
-  },
-  {
-    emoji:'☢️', color:'#8AC926', colorLight:'#EDF8D4',
-    title:'核能洞穴 2-1「半衰期倒數」',
-    subtitle:'Radioactivity · 計算題',
-    question:'初始活度 800 Bq，半衰期 5 日，15 日後活度？',
-    answer:'15 日 = 3 個半衰期<br>800 → 400 → 200 → <strong>100 Bq</strong><br><br>玩法：加屏蔽、倒數計時。'
-  },
-  {
-    emoji:'⚛️', color:'#F72585', colorLight:'#FDE0EE',
-    title:'原子工坊 1-1「光電效應彈珠」',
-    subtitle:'Atomic World · 計算題',
-    question:'功函數 2.0 eV，光頻率 1.0×10¹⁵ Hz，最大動能？',
-    answer:'E = hf = 6.63×10⁻³⁴ × 1.0×10¹⁵ = 6.63×10⁻¹⁹ J<br>= 6.63×10⁻¹⁹ / 1.6×10⁻¹⁹ = 4.14 eV<br>Kmax = 4.14 − 2.0 = <strong>2.14 eV</strong><br><br>玩法：射光子打金屬，觀察電子彈出。'
-  }
-];
+var state = {
+  coins: 0,
+  palLevels: {},      // {newton: 1, ...}
+  clearedZones: [],   // ['newton', 'thermo', ...]
+  unlockedZones: ['newton'],
+  currentZone: null,
+  currentPal: null,
+  battle: null
+};
 
-/* ============================================================
-   開發路線
-   ============================================================ */
-var ROADMAP = [
-  {stage:'Phase 1 · 0–3 月', dot:'#F5A623', title:'概念原型', desc:'1 個課題、2 個角色、10 條題目，驗證核心玩法。'},
-  {stage:'Phase 2 · 4–9 月', dot:'#FFB703', title:'垂直切片', desc:'3 個課題、6 個角色、100 條題目、完整 UI 同動畫。'},
-  {stage:'Phase 3 · 10–18 月', dot:'#2EC4B6', title:'完整遊戲', desc:'9 個課題、9 個角色、1000+ 條題目、Boss 戰、模擬試。'},
-  {stage:'Phase 4 · 19–22 月', dot:'#EF476F', title:'測試', desc:'學校試用、收集老師同學生反饋、修正物理內容。'},
-  {stage:'Phase 5 · 23–24 月', dot:'#9B5DE5', title:'正式推出', desc:'iOS / Android / Web 同步上線，配合學校推廣。'},
-  {stage:'Phase 6 · 每年更新', dot:'#4CC9F0', title:'持續更新', desc:'更新題庫、角色、節日活動，跟隨考評局課程微調。'}
-];
+var STORAGE_KEY = 'physics_pals_save_v1';
 
-/* ============================================================
-   渲染
-   ============================================================ */
-
-/* 物理獸 SVG 生成 */
-function palSvg(pal){
-  var c = pal.color;
-  var key = pal.key;
-
-  var bodies = {
-    newton:
-      '<ellipse cx="50" cy="58" rx="26" ry="22" fill="' + c + '"/>' +
-      '<circle cx="50" cy="44" r="18" fill="' + c + '"/>' +
-      '<path d="M 34 32 L 30 20 L 42 28 Z" fill="' + c + '"/>' +
-      '<path d="M 66 32 L 70 20 L 58 28 Z" fill="' + c + '"/>' +
-      '<circle cx="50" cy="30" r="7" fill="#E63946"/>' +
-      '<path d="M 50 24 Q 52 20 54 24" stroke="#4A7C2F" stroke-width="2" fill="none"/>',
-    zappy:
-      '<ellipse cx="50" cy="58" rx="30" ry="20" fill="' + c + '"/>' +
-      '<path d="M 20 58 Q 30 50 50 58 Q 70 66 80 58" stroke="#3A0CA3" stroke-width="3" fill="none"/>' +
-      '<circle cx="42" cy="48" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="58" cy="48" r="3" fill="#2c2c2c"/>' +
-      '<path d="M 44 60 Q 50 64 56 60" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M 78 60 L 84 56 L 82 62 L 88 60" stroke="#3A0CA3" stroke-width="2" fill="none"/>',
-    wavey:
-      '<circle cx="50" cy="56" r="22" fill="' + c + '"/>' +
-      '<path d="M 38 30 Q 42 14 46 30 Q 50 46 54 30 Q 58 14 62 30" stroke="' + c + '" stroke-width="6" fill="none" stroke-linecap="round"/>' +
-      '<circle cx="42" cy="52" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="58" cy="52" r="3" fill="#2c2c2c"/>' +
-      '<path d="M 45 62 Q 50 66 55 62" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<circle cx="38" cy="60" r="3" fill="#FFB6C1" opacity="0.7"/>' +
-      '<circle cx="62" cy="60" r="3" fill="#FFB6C1" opacity="0.7"/>',
-    thermo:
-      '<ellipse cx="50" cy="58" rx="22" ry="24" fill="' + c + '"/>' +
-      '<circle cx="50" cy="40" r="17" fill="' + c + '"/>' +
-      '<ellipse cx="50" cy="60" rx="12" ry="16" fill="#fff"/>' +
-      '<circle cx="44" cy="38" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="56" cy="38" r="3" fill="#2c2c2c"/>' +
-      '<path d="M 50 42 L 54 46 L 50 50 L 46 46 Z" fill="#FFD166"/>' +
-      '<rect x="42" y="70" width="16" height="4" rx="2" fill="#fff"/>',
-    nuky:
-      '<circle cx="50" cy="46" r="20" fill="' + c + '"/>' +
-      '<circle cx="50" cy="70" r="18" fill="' + c + '"/>' +
-      '<circle cx="36" cy="32" r="8" fill="' + c + '"/>' +
-      '<circle cx="64" cy="32" r="8" fill="' + c + '"/>' +
-      '<circle cx="36" cy="32" r="3" fill="#FFD60A"/>' +
-      '<circle cx="64" cy="32" r="3" fill="#FFD60A"/>' +
-      '<circle cx="44" cy="42" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="56" cy="42" r="3" fill="#2c2c2c"/>' +
-      '<ellipse cx="50" cy="52" rx="4" ry="2.5" fill="#2c2c2c"/>' +
-      '<circle cx="50" cy="70" r="5" fill="#FFD60A" opacity="0.6"/>',
-    astro:
-      '<ellipse cx="50" cy="58" rx="24" ry="22" fill="' + c + '"/>' +
-      '<circle cx="50" cy="42" r="18" fill="' + c + '"/>' +
-      '<circle cx="42" cy="40" r="8" fill="#E0E1DD"/>' +
-      '<circle cx="58" cy="40" r="8" fill="#E0E1DD"/>' +
-      '<circle cx="42" cy="40" r="3" fill="#1B263B"/>' +
-      '<circle cx="58" cy="40" r="3" fill="#1B263B"/>' +
-      '<path d="M 50 50 L 46 56 L 54 56 Z" fill="#FFD60A"/>' +
-      '<circle cx="38" cy="30" r="1.5" fill="#FFD60A"/>' +
-      '<circle cx="64" cy="28" r="1.5" fill="#FFD60A"/>' +
-      '<circle cx="50" cy="24" r="1.8" fill="#FFD60A"/>',
-    atomi:
-      '<circle cx="50" cy="54" r="20" fill="' + c + '"/>' +
-      '<path d="M 30 40 L 24 28 L 38 36 Z" fill="' + c + '"/>' +
-      '<path d="M 70 40 L 76 28 L 62 36 Z" fill="' + c + '"/>' +
-      '<circle cx="42" cy="50" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="58" cy="50" r="3" fill="#2c2c2c"/>' +
-      '<ellipse cx="50" cy="60" rx="3.5" ry="2.5" fill="#2c2c2c"/>' +
-      '<ellipse cx="50" cy="78" rx="16" ry="5" fill="none" stroke="#4CC9F0" stroke-width="2"/>' +
-      '<circle cx="66" cy="78" r="2.5" fill="#4CC9F0"/>' +
-      '<circle cx="34" cy="78" r="2.5" fill="#4CC9F0"/>',
-    joule:
-      '<ellipse cx="50" cy="60" rx="24" ry="18" fill="' + c + '"/>' +
-      '<circle cx="50" cy="42" r="16" fill="' + c + '"/>' +
-      '<circle cx="36" cy="32" r="6" fill="' + c + '"/>' +
-      '<circle cx="64" cy="32" r="6" fill="' + c + '"/>' +
-      '<circle cx="44" cy="40" r="2.5" fill="#2c2c2c"/>' +
-      '<circle cx="56" cy="40" r="2.5" fill="#2c2c2c"/>' +
-      '<ellipse cx="50" cy="48" rx="3" ry="2" fill="#2c2c2c"/>' +
-      '<path d="M 78 50 L 82 44 L 86 50 L 90 44" stroke="#2EC4B6" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M 20 80 Q 30 74 40 80 T 60 80 T 80 80" stroke="#2EC4B6" stroke-width="2.5" fill="none" stroke-linecap="round"/>',
-    meddy:
-      '<ellipse cx="50" cy="58" rx="24" ry="22" fill="' + c + '"/>' +
-      '<circle cx="50" cy="40" r="17" fill="' + c + '"/>' +
-      '<path d="M 33 30 L 28 20 L 40 28 Z" fill="' + c + '"/>' +
-      '<path d="M 67 30 L 72 20 L 60 28 Z" fill="' + c + '"/>' +
-      '<circle cx="43" cy="38" r="3" fill="#2c2c2c"/>' +
-      '<circle cx="57" cy="38" r="3" fill="#2c2c2c"/>' +
-      '<ellipse cx="50" cy="46" rx="3.5" ry="2.5" fill="#2c2c2c"/>' +
-      '<rect x="38" y="58" width="24" height="20" rx="3" fill="#fff"/>' +
-      '<path d="M 50 62 L 50 74 M 44 68 L 56 68" stroke="#00B4D8" stroke-width="2"/>'
-  };
-
-  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' + bodies[key] + '</svg>';
+function save(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      coins: state.coins,
+      palLevels: state.palLevels,
+      clearedZones: state.clearedZones,
+      unlockedZones: state.unlockedZones
+    }));
+  }catch(e){}
+}
+function load(){
+  try{
+    var d = localStorage.getItem(STORAGE_KEY);
+    if(!d) return false;
+    var parsed = JSON.parse(d);
+    state.coins = parsed.coins || 0;
+    state.palLevels = parsed.palLevels || {};
+    state.clearedZones = parsed.clearedZones || [];
+    state.unlockedZones = parsed.unlockedZones || ['newton'];
+    // 確保每隻物理獸有等級
+    PALS.forEach(function(p){
+      if(!state.palLevels[p.key]) state.palLevels[p.key] = 1;
+    });
+    return true;
+  }catch(e){ return false; }
+}
+function hasSave(){
+  return !!localStorage.getItem(STORAGE_KEY);
 }
 
-/* 渲染物理獸 */
-(function renderPals(){
-  var grid = document.getElementById('palsGrid');
-  if(!grid) return;
-  PALS.forEach(function(pal, i){
-    var card = document.createElement('div');
-    card.className = 'pal-card reveal';
-    card.style.setProperty('--pal-color', pal.color);
-    card.style.setProperty('--pal-color-light', pal.colorLight);
-    card.style.transitionDelay = (i * 0.05) + 's';
+/* ============================================================
+   UI 工具
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  $(id).classList.add('active');
+}
+function toast(msg, dur){
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, dur || 1600);
+}
+function getPal(key){
+  for(var i=0;i<PALS.length;i++) if(PALS[i].key===key) return PALS[i];
+  return null;
+}
 
-    var skills = pal.skills.map(function(s){
-      return '<span class="pal-chip">' + s + '</span>';
-    }).join('');
-
-    card.innerHTML =
-      '<div class="pal-head">' +
-        '<div class="pal-avatar">' + palSvg(pal) + '</div>' +
-        '<div class="pal-meta">' +
-          '<div class="pal-name">' + pal.name + '</div>' +
-          '<div class="pal-en">' + pal.en + '</div>' +
-          '<span class="pal-tag">' + pal.tag + '</span>' +
-        '</div>' +
-      '</div>' +
-      '<p class="pal-desc">' + pal.desc + '</p>' +
-      '<div class="pal-quote">' + pal.quote + '</div>' +
-      '<div class="pal-foot">' + skills + '</div>';
-
-    grid.appendChild(card);
-  });
-})();
-
-/* 渲染物理島 */
-(function renderZones(){
-  var grid = document.getElementById('islandGrid');
-  if(!grid) return;
-  ZONES.forEach(function(z, i){
+/* ============================================================
+   地圖渲染
+   ============================================================ */
+function renderMap(){
+  var list = $('zoneList');
+  list.innerHTML = '';
+  ZONES.forEach(function(z){
+    var locked = state.unlockedZones.indexOf(z.id) === -1;
+    var cleared = state.clearedZones.indexOf(z.id) !== -1;
     var el = document.createElement('div');
-    el.className = 'island-zone reveal';
-    el.style.setProperty('--zone-color', z.color);
-    el.style.transitionDelay = (i * 0.04) + 's';
+    el.className = 'zone-item' + (locked ? ' locked' : '') + (cleared ? ' cleared' : '');
+    el.style.setProperty('--zc', z.color);
+    el.style.setProperty('--zc-light', z.light);
     el.innerHTML =
-      '<span class="zone-emoji">' + z.emoji + '</span>' +
-      '<div class="zone-name">' + z.name + '</div>' +
-      '<div class="zone-sub">' + z.sub + '</div>';
-    grid.appendChild(el);
-  });
-})();
-
-/* 渲染遊戲模式 */
-(function renderModes(){
-  var grid = document.getElementById('modesGrid');
-  if(!grid) return;
-  MODES.forEach(function(m, i){
-    var el = document.createElement('div');
-    el.className = 'mode-card reveal';
-    el.style.transitionDelay = (i * 0.05) + 's';
-    el.innerHTML =
-      '<div class="mode-emoji">' + m.emoji + '</div>' +
-      '<h3>' + m.name + '</h3>' +
-      '<p>' + m.desc + '</p>';
-    grid.appendChild(el);
-  });
-})();
-
-/* 渲染題目 */
-(function renderQuizzes(){
-  var list = document.getElementById('quizList');
-  if(!list) return;
-  QUIZZES.forEach(function(q, i){
-    var item = document.createElement('div');
-    item.className = 'quiz-item reveal';
-    item.style.setProperty('--q-color', q.color);
-    item.style.setProperty('--q-color-light', q.colorLight);
-    item.style.transitionDelay = (i * 0.05) + 's';
-
-    item.innerHTML =
-      '<div class="quiz-head">' +
-        '<div class="q-tag">' + q.emoji + '</div>' +
-        '<div class="q-title">' + q.title + '<small>' + q.subtitle + '</small></div>' +
-        '<div class="q-toggle">+</div>' +
-      '</div>' +
-      '<div class="quiz-body">' +
-        '<div class="quiz-body-inner">' +
-          '<p><strong>問題：</strong>' + q.question + '</p>' +
-          '<div class="answer"><strong>解答：</strong><br>' + q.answer + '</div>' +
+      '<div class="zone-emoji">' + (locked ? '🔒' : z.emoji) + '</div>' +
+      '<div class="zone-info">' +
+        '<div class="zone-name">' + z.name + '</div>' +
+        '<div class="zone-sub">' + z.sub + '</div>' +
+        '<div class="zone-progress">' +
+          '<span class="dot done"></span>' +
+          '<span class="dot done"></span>' +
+          '<span class="dot ' + (cleared?'done':'') + '"></span>' +
+          '<span class="dot ' + (cleared?'done':'') + '"></span>' +
+          '<span class="dot ' + (cleared?'done':'') + '"></span>' +
         '</div>' +
       '</div>';
-
-    item.querySelector('.quiz-head').addEventListener('click', function(){
-      item.classList.toggle('open');
-    });
-
-    list.appendChild(item);
-  });
-})();
-
-/* 渲染路線 */
-(function renderRoadmap(){
-  var list = document.getElementById('roadmapList');
-  if(!list) return;
-  ROADMAP.forEach(function(r, i){
-    var el = document.createElement('div');
-    el.className = 'road-item reveal';
-    el.style.setProperty('--dot', r.dot);
-    el.style.transitionDelay = (i * 0.06) + 's';
-    el.innerHTML =
-      '<div class="road-stage">' + r.stage + '</div>' +
-      '<h3>' + r.title + '</h3>' +
-      '<p>' + r.desc + '</p>';
+    if(!locked){
+      el.addEventListener('click', function(){ enterZone(z.id); });
+    } else {
+      el.addEventListener('click', function(){ toast('🔒 要先完成之前嘅地區'); });
+    }
     list.appendChild(el);
   });
-})();
+}
 
 /* ============================================================
-   滾動出現動畫
+   圖鑑渲染
    ============================================================ */
-(function initReveal(){
-  var els = document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){
-    els.forEach(function(el){ el.classList.add('show'); });
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-        io.unobserve(entry.target);
-      }
-    });
-  }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
-  els.forEach(function(el){ io.observe(el); });
-})();
-
-/* ============================================================
-   導航點擊平滑滾動
-   ============================================================ */
-document.querySelectorAll('.nav-links a, .btn[href^="#"]').forEach(function(a){
-  a.addEventListener('click', function(e){
-    var href = this.getAttribute('href');
-    if(href && href.startsWith('#')){
-      e.preventDefault();
-      var target = document.querySelector(href);
-      if(target){
-        window.scrollTo({
-          top: target.offsetTop - 70,
-          behavior: 'smooth'
-        });
-      }
+function renderDex(){
+  var grid = $('dexGrid');
+  grid.innerHTML = '';
+  PALS.forEach(function(p){
+    var unlocked = state.palLevels[p.key] && state.palLevels[p.key] >= 1;
+    var lv = state.palLevels[p.key] || 1;
+    var el = document.createElement('div');
+    el.className = 'dex-card' + (unlocked ? '' : ' locked');
+    el.style.setProperty('--dc', p.color);
+    el.style.setProperty('--dc-light', p.light);
+    el.innerHTML =
+      '<div class="dc-avatar">' + (unlocked ? p.svg : '') + '</div>' +
+      '<div class="dc-name">' + (unlocked ? p.name : '？？？') + '</div>' +
+      '<div class="dc-tag">' + (unlocked ? p.zone : '未解鎖') + '</div>' +
+      (unlocked ? '<div class="dc-level">Lv.' + lv + '</div>' : '');
+    if(unlocked){
+      el.addEventListener('click', function(){
+        toast(p.name + ' · ' + p.en + ' · Lv.' + lv);
+      });
     }
+    grid.appendChild(el);
+  });
+}
+
+/* ============================================================
+   底部導航
+   ============================================================ */
+document.querySelectorAll('.bottom-nav .nav-item').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var page = this.getAttribute('data-page');
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+    $('map').style.display = page === 'map' ? 'flex' : 'none';
+    $('dex').style.display = page === 'dex' ? 'flex' : 'none';
+    if(page === 'dex') renderDex();
+    if(page === 'map') renderMap();
   });
 });
-</script>
 
+/* ============================================================
+   物理獸選擇
+   ============================================================ */
+function enterZone(zoneId){
+  var zone = ZONES.filter(function(z){ return z.id === zoneId; })[0];
+  if(!zone) return;
+  state.currentZone = zone;
+
+  // 顯示可用物理獸
+  var grid = $('selectGrid');
+  grid.innerHTML = '';
+  $('selectTitle').textContent = zone.name;
+
+  // 該地區代表獸永遠可用，其他已解鎖地區代表獸也可用
+  var availablePals = [];
+  ZONES.forEach(function(z){
+    if(state.unlockedZones.indexOf(z.id) !== -1){
+      availablePals.push(z.pal);
+    }
+  });
+
+  availablePals.forEach(function(pKey){
+    var p = getPal(pKey);
+    if(!p) return;
+    var lv = state.palLevels[p.key] || 1;
+    var el = document.createElement('div');
+    el.className = 'select-card';
+    el.style.setProperty('--sc', p.color);
+    el.style.setProperty('--sc-light', p.light);
+    el.innerHTML =
+      '<div class="sc-avatar">' + p.svg + '</div>' +
+      '<div class="sc-name">' + p.name + '</div>' +
+      '<div class="sc-lv">Lv.' + lv + '</div>';
+    el.addEventListener('click', function(){
+      state.currentPal = pKey;
+      startBattle();
+    });
+    grid.appendChild(el);
+  });
+
+  showScreen('select');
+}
+
+$('btnBackFromSelect').addEventListener('click', function(){
+  showScreen('main');
+  renderMap();
+});
+
+/* ============================================================
+   戰鬥系統
+   ============================================================ */
+var BATTLE_HP = 100;
+
+function startBattle(){
+  var zone = state.currentZone;
+  var pal = getPal(state.currentPal);
+  var qs = QUESTIONS[zone.id] || QUESTIONS.newton;
+
+  state.battle = {
+    zone: zone,
+    pal: pal,
+    questions: qs.slice(),  // 複製
+    qIndex: 0,
+    playerHp: BATTLE_HP,
+    playerMaxHp: BATTLE_HP,
+    enemyHp: BATTLE_HP,
+    enemyMaxHp: BATTLE_HP,
+    correctCount: 0,
+    answered: false
+  };
+
+  // 打亂題目順序
+  state.battle.questions.sort(function(){ return Math.random() - 0.5; });
+
+  // 更新 UI
+  $('battleTitle').textContent = zone.name;
+  $('playerAvatar').innerHTML = pal.svg;
+  $('playerAvatar').style.borderColor = pal.color;
+  $('playerName').textContent = pal.name;
+  $('enemyAvatar').textContent = zone.enemy.emoji;
+  $('enemyName').textContent = zone.enemy.name;
+  $('coinCountBattle').textContent = state.coins;
+
+  updateHpBars();
+  showScreen('battle');
+  renderQuestion();
+}
+
+function updateHpBars(){
+  var b = state.battle;
+  var pPct = (b.playerHp / b.playerMaxHp) * 100;
+  var ePct = (b.enemyHp / b.enemyMaxHp) * 100;
+  $('playerHp').style.width = pPct + '%';
+  $('enemyHp').style.width = ePct + '%';
+  $('playerHpText').textContent = b.playerHp + ' / ' + b.playerMaxHp;
+  $('enemyHpText').textContent = b.enemyHp + ' / ' + b.enemyMaxHp;
+}
+
+function renderQuestion(){
+  var b = state.battle;
+  if(b.qIndex >= b.questions.length){
+    endBattle();
+    return;
+  }
+  b.answered = false;
+  var q = b.questions[b.qIndex];
+  $('qCategory').textContent = b.zone.sub.toUpperCase();
+  $('qProgress').textContent = (b.qIndex + 1) + ' / ' + b.questions.length;
+  $('questionText').textContent = q.q;
+
+  var answersBox = $('answers');
+  answersBox.innerHTML = '';
+  var keys = ['A','B','C','D'];
+
+  q.a.forEach(function(ansText, i){
+    var btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.innerHTML = '<span class="key">' + keys[i] + '</span><span>' + ansText + '</span>';
+    btn.addEventListener('click', function(){ answerQuestion(i, q.c); });
+    answersBox.appendChild(btn);
+  });
+
+  $('battleMsg').textContent = '揀答案攻擊迷思獸！';
+  $('battleMsg').className = 'battle-msg';
+}
+
+function answerQuestion(selected, correct){
+  var b = state.battle;
+  if(b.answered) return;
+  b.answered = true;
+
+  var btns = $('answers').querySelectorAll('.answer-btn');
+  btns.forEach(function(btn, i){
+    btn.disabled = true;
+    if(i === correct) btn.classList.add('correct');
+    if(i === selected && selected !== correct) btn.classList.add('wrong');
+  });
+
+  var isCorrect = selected === correct;
+  var playerAvatar = $('playerAvatar');
+  var enemyAvatar = $('enemyAvatar');
+
+  if(isCorrect){
+    b.correctCount++;
+    var dmg = 25 + Math.floor(Math.random() * 6); // 25–30
+    b.enemyHp = Math.max(0, b.enemyHp - dmg);
+    $('battleMsg').textContent = '✅ 答對！' + b.pal.name + ' 攻擊！ -' + dmg + ' HP';
+    $('battleMsg').className = 'battle-msg good';
+    playerAvatar.classList.add('attack-r');
+    setTimeout(function(){
+      enemyAvatar.classList.add('shake');
+      setTimeout(function(){
+        playerAvatar.classList.remove('attack-r');
+        enemyAvatar.classList.remove('shake');
+      }, 400);
+    }, 200);
+  } else {
+    var dmg2 = 18 + Math.floor(Math.random() * 6);
+    b.playerHp = Math.max(0, b.playerHp - dmg2);
+    $('battleMsg').textContent = '❌ 答錯！迷思獸反擊！ -' + dmg2 + ' HP';
+    $('battleMsg').className = 'battle-msg bad';
+    enemyAvatar.classList.add('attack-l');
+    setTimeout(function(){
+      playerAvatar.classList.add('shake');
+      setTimeout(function(){
+        enemyAvatar.classList.remove('attack-l');
+        playerAvatar.classList.remove('shake');
+      }, 400);
+    }, 200);
+  }
+
+  updateHpBars();
+  b.qIndex++;
+
+  setTimeout(function(){
+    if(b.enemyHp <= 0 || b.playerHp <= 0){
+      endBattle();
+    } else if(b.qIndex >= b.questions.length){
+      endBattle();
+    } else {
+      renderQuestion();
+    }
+  }, 1200);
+}
+
+function endBattle(){
+  var b = state.battle;
+  var win = b.enemyHp <= 0 || (b.playerHp > 0 && b.correctCount >= Math.ceil(b.questions.length * 0.6));
+
+  var popup = $('resultPopup');
+  var emoji = $('popupEmoji');
+  var title = $('popupTitle');
+  var sub = $('popupSub');
+  var rewards = $('popupRewards');
+
+  if(win){
+    // 勝利
+    var coinReward = 20 + b.correctCount * 5;
+    state.coins += coinReward;
+    $('coinCount').textContent = state.coins;
+
+    // 升級該地區物理獸
+    var palKey = b.zone.pal;
+    state.palLevels[palKey] = (state.palLevels[palKey] || 1) + 1;
+
+    // 標記完成
+    if(state.clearedZones.indexOf(b.zone.id) === -1){
+      state.clearedZones.push(b.zone.id);
+    }
+    // 解鎖下一個地區
+    var zoneIdx = ZONES.map(function(z){ return z.id; }).indexOf(b.zone.id);
+    if(zoneIdx >= 0 && zoneIdx < ZONES.length - 1){
+      var nextZone = ZONES[zoneIdx + 1];
+      if(state.unlockedZones.indexOf(nextZone.id) === -1){
+        state.unlockedZones.push(nextZone.id);
+      }
+    }
+    save();
+
+    emoji.textContent = '🏆';
+    title.textContent = '勝利！';
+    sub.textContent = '你打敗咗「' + b.zone.enemy.name + '」！\n答對 ' + b.correctCount + ' / ' + b.questions.length + ' 題';
+    rewards.innerHTML =
+      '<div class="reward">⚡ +' + coinReward + '</div>' +
+      '<div class="reward">📈 ' + getPal(palKey).name + ' Lv.' + state.palLevels[palKey] + '</div>';
+  } else {
+    // 失敗
+    emoji.textContent = '💀';
+    title.textContent = '失敗...';
+    sub.textContent = '迷思獸太強了！\n答對 ' + b.correctCount + ' / ' + b.questions.length + ' 題';
+    rewards.innerHTML = '<div class="reward" style="background:#FDE5EC;border-color:#F5A0B0;color:#C42F4D">再接再厲！</div>';
+  }
+
+  popup.classList.add('show');
+}
+
+$('popupBack').addEventListener('click', function(){
+  $('resultPopup').classList.remove('show');
+  showScreen('main');
+  renderMap();
+  renderDex();
+  $('coinCount').textContent = state.coins;
+});
+
+$('popupRetry').addEventListener('click', function(){
+  $('resultPopup').classList.remove('show');
+  startBattle();
+});
+
+$('btnQuitBattle').addEventListener('click', function(){
+  if(confirm('確定要退出戰鬥嗎？進度唔會保存。')){
+    showScreen('main');
+    renderMap();
+  }
+});
+
+/* ============================================================
+   開始遊戲
+   ============================================================ */
+$('btnNewGame').addEventListener('click', function(){
+  if(hasSave()){
+    if(!confirm('已有存檔，確定要重新開始嗎？')){
+      return;
+    }
+  }
+  state = {
+    coins: 0,
+    palLevels: {},
+    clearedZones: [],
+    unlockedZones: ['newton'],
+    currentZone: null,
+    currentPal: null,
+    battle: null
+  };
+  PALS.forEach(function(p){ state.palLevels[p.key] = 1; });
+  save();
+  $('coinCount').textContent = state.coins;
+  showScreen('main');
+  renderMap();
+});
+
+$('btnContinue').addEventListener('click', function(){
+  if(load()){
+    $('coinCount').textContent = state.coins;
+    showScreen('main');
+    renderMap();
+  }
+});
+
+/* ============================================================
+   初始化
+   ============================================================ */
+(function init(){
+  // 載入存檔
+  var loaded = load();
+  if(loaded){
+    $('btnContinue').style.display = 'block';
+    $('coinCount').textContent = state.coins;
+  } else {
+    PALS.forEach(function(p){ state.palLevels[p.key] = 1; });
+  }
+
+  // 假載入動畫
+  setTimeout(function(){
+    showScreen('start');
+  }, 800);
+})();
+</script>
 </body>
 </html>
