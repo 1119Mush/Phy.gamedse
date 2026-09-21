@@ -8,551 +8,148 @@
 <style>
 :root{
   --bg:#FFF9F0;--ink:#2B2D42;--soft:#8A8F9E;--line:#EDE7DC;
-  --card:#FFF;--shadow:0 4px 20px rgba(80,60,30,.08);
-  --radius:22px;
+  --shadow:0 4px 20px rgba(80,60,30,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
-body{
-  font-family:'Noto Sans TC',-apple-system,sans-serif;
-  background:var(--bg);color:var(--ink);
-  -webkit-font-smoothing:antialiased;
-  user-select:none;
-}
+body{font-family:'Noto Sans TC',-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;user-select:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 button:active{transform:scale(.96)}
-
-/* ===== 通用 Screen ===== */
-.screen{
-  position:fixed;inset:0;
-  display:none;flex-direction:column;
-  overflow:hidden;
-}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;overflow:hidden}
 .screen.active{display:flex}
 
-/* ===== 載入 ===== */
-#loading{
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#FFE9C9,#FFD6E8,#D4E8FF);
-}
-#loading .logo{
-  font-family:'Baloo 2',cursive;
-  font-size:clamp(2rem,8vw,3.5rem);
-  font-weight:800;text-align:center;
-  background:linear-gradient(120deg,#F5A623,#EF476F,#9B5DE5);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:pop 1s ease both;
-}
-#loading .sub{text-align:center;color:#fff;font-size:.9rem;margin-top:12px;opacity:.9}
-@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-
-/* ===== 開始畫面 ===== */
-#start{
-  background:linear-gradient(160deg,#FFE9C9 0%,#FFD6E8 50%,#D4E8FF 100%);
-  align-items:center;justify-content:center;
-  padding:24px;text-align:center;
-}
-#start .start-inner{max-width:480px;width:100%}
-#start h1{
-  font-family:'Baloo 2',cursive;
-  font-size:clamp(2.2rem,9vw,3.6rem);
-  font-weight:800;line-height:1.05;
-  margin-bottom:8px;
-  background:linear-gradient(120deg,#F5A623,#EF476F,#9B5DE5,#4CC9F0);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-#start .tagline{font-size:.9rem;color:#5A5F6E;margin-bottom:36px;font-weight:500}
-#start .pals-preview{
-  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
-  margin-bottom:36px;
-}
-#start .pals-preview .pp{
-  width:52px;height:52px;border-radius:50%;
-  background:rgba(255,255,255,.9);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.6rem;
-  box-shadow:0 6px 16px rgba(80,60,30,.12);
-  animation:bob 2.4s ease-in-out infinite;
-}
-#start .pals-preview .pp:nth-child(2){animation-delay:.2s}
-#start .pals-preview .pp:nth-child(3){animation-delay:.4s}
-#start .pals-preview .pp:nth-child(4){animation-delay:.6s}
-#start .pals-preview .pp:nth-child(5){animation-delay:.8s}
-#start .pals-preview .pp:nth-child(6){animation-delay:1s}
-#start .pals-preview .pp:nth-child(7){animation-delay:1.2s}
-#start .pals-preview .pp:nth-child(8){animation-delay:1.4s}
-#start .pals-preview .pp:nth-child(9){animation-delay:1.6s}
+/* 開始 */
+#start{background:linear-gradient(160deg,#FFE9C9 0%,#FFD6E8 50%,#D4E8FF 100%);align-items:center;justify-content:center;padding:24px;text-align:center}
+#start .inner{max-width:480px;width:100%}
+#start h1{font-family:'Baloo 2',cursive;font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800;line-height:1.05;margin-bottom:8px;background:linear-gradient(120deg,#F5A623,#EF476F,#9B5DE5,#4CC9F0);-webkit-background-clip:text;background-clip:text;color:transparent}
+#start .tag{font-size:.9rem;color:#5A5F6E;margin-bottom:36px;font-weight:500}
+#start .pals{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+#start .pp{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 6px 16px rgba(80,60,30,.12);animation:bob 2.4s ease-in-out infinite}
+#start .pp:nth-child(2){animation-delay:.2s}#start .pp:nth-child(3){animation-delay:.4s}
+#start .pp:nth-child(4){animation-delay:.6s}#start .pp:nth-child(5){animation-delay:.8s}
+#start .pp:nth-child(6){animation-delay:1s}#start .pp:nth-child(7){animation-delay:1.2s}
+#start .pp:nth-child(8){animation-delay:1.4s}#start .pp:nth-child(9){animation-delay:1.6s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.start-btn{display:block;width:100%;padding:18px 24px;border-radius:999px;background:var(--ink);color:#fff;font-size:1.05rem;font-weight:700;box-shadow:0 12px 32px rgba(43,45,66,.3);margin-bottom:12px;transition:all .2s}
+.start-btn:hover{transform:translateY(-2px)}
+.start-btn.ghost{background:rgba(255,255,255,.85);color:var(--ink);box-shadow:0 6px 20px rgba(80,60,30,.1)}
 
-.start-btn{
-  display:block;width:100%;
-  padding:18px 24px;border-radius:999px;
-  background:var(--ink);color:#fff;
-  font-size:1.05rem;font-weight:700;
-  box-shadow:0 12px 32px rgba(43,45,66,.3);
-  transition:all .2s;
-  margin-bottom:12px;
-}
-.start-btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(43,45,66,.4)}
-.start-btn.ghost{
-  background:rgba(255,255,255,.85);color:var(--ink);
-  box-shadow:0 6px 20px rgba(80,60,30,.1);
-}
-
-/* ===== 頂欄 ===== */
-.topbar{
-  flex-shrink:0;
-  padding:14px 18px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(255,249,240,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
-  z-index:10;
-}
+/* 頂欄 */
+.topbar{flex-shrink:0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,249,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:10}
 .topbar .tb-left{display:flex;align-items:center;gap:10px;min-width:0}
-.topbar .tb-title{
-  font-family:'Baloo 2',cursive;
-  font-size:1.1rem;font-weight:800;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.topbar .tb-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .topbar .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.icon-btn{
-  width:42px;height:42px;border-radius:50%;
-  background:#fff;border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;
-  transition:all .2s;
-  box-shadow:0 2px 8px rgba(80,60,30,.06);
-}
-.icon-btn:hover{transform:scale(1.08)}
-.coin-pill{
-  display:flex;align-items:center;gap:5px;
-  padding:7px 14px;border-radius:999px;
-  background:linear-gradient(120deg,#FFF3D6,#FFE9C9);
-  border:1px solid #F5D89A;
-  font-size:.85rem;font-weight:800;color:#8B6914;
-}
+.icon-btn{width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 2px 8px rgba(80,60,30,.06)}
+.coin-pill{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:999px;background:linear-gradient(120deg,#FFF3D6,#FFE9C9);border:1px solid #F5D89A;font-size:.85rem;font-weight:800;color:#8B6914}
 .coin-pill .cp-emoji{font-size:1rem}
 
-/* ===== 地圖 ===== */
-#map .map-body{
-  flex:1;overflow-y:auto;
-  padding:16px 16px 100px;
-}
+/* 地圖 */
+#map .map-body{flex:1;overflow-y:auto;padding:16px 16px 100px}
 .zone-list{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto}
-.zone-item{
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  padding:16px;
-  display:flex;align-items:center;gap:14px;
-  box-shadow:0 4px 16px rgba(80,60,30,.06);
-  transition:all .25s;
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-}
-.zone-item:hover:not(.locked){
-  transform:translateY(-3px);
-  box-shadow:0 12px 32px rgba(80,60,30,.14);
-  border-color:var(--zc);
-}
+.zone-item{background:#fff;border:2px solid var(--line);border-radius:22px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(80,60,30,.06);transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
+.zone-item:hover:not(.locked){transform:translateY(-3px);box-shadow:0 12px 32px rgba(80,60,30,.14);border-color:var(--zc)}
 .zone-item.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
-.zone-item.cleared::after{
-  content:'✓ 完成';
-  position:absolute;top:10px;right:10px;
-  font-size:.65rem;font-weight:700;
-  padding:3px 10px;border-radius:999px;
-  background:#06D6A0;color:#fff;
-}
-.zone-emoji{
-  width:60px;height:60px;flex-shrink:0;
-  border-radius:18px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.8rem;
-  background:linear-gradient(140deg,var(--zc-light),#fff);
-  border:2px solid #fff;
-  box-shadow:0 4px 12px rgba(80,60,30,.08);
-}
+.zone-item.cleared::after{content:'✓ CLEAR';position:absolute;top:10px;right:10px;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:999px;background:#06D6A0;color:#fff;letter-spacing:.05em}
+.zone-emoji{width:60px;height:60px;flex-shrink:0;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:linear-gradient(140deg,var(--zc-light),#fff);border:2px solid #fff;box-shadow:0 4px 12px rgba(80,60,30,.08)}
 .zone-info{flex:1;min-width:0}
-.zone-name{
-  font-family:'Baloo 2',cursive;
-  font-size:1.15rem;font-weight:800;
-  color:var(--zc);line-height:1.1;
-  margin-bottom:3px;
-}
-.zone-sub{font-size:.78rem;color:var(--soft);margin-bottom:6px}
-.zone-progress{
-  display:flex;gap:4px;
-}
-.zone-progress .dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--line);
-}
+.zone-name{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800;color:var(--zc);line-height:1.1;margin-bottom:3px}
+.zone-sub{font-size:.75rem;color:var(--soft);margin-bottom:6px;font-family:'Baloo 2',cursive}
+.zone-progress{display:flex;gap:4px}
+.zone-progress .dot{width:8px;height:8px;border-radius:50%;background:var(--line)}
 .zone-progress .dot.done{background:var(--zc)}
 
-/* ===== 戰鬥畫面 ===== */
-#battle{
-  background:linear-gradient(180deg,#F4F7FB 0%,#FFF9F0 100%);
-}
-#battle .arena{
-  flex:1;
-  display:flex;flex-direction:column;
-  padding:16px;
-  overflow-y:auto;
-  position:relative;
-}
-.arena-stage{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;
-  margin-bottom:16px;
-  padding:16px;
-  background:rgba(255,255,255,.6);
-  border-radius:var(--radius);
-  border:1px solid var(--line);
-  backdrop-filter:blur(8px);
-}
-.fighter{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  text-align:center;
-}
-.fighter .avatar{
-  width:80px;height:80px;
-  border-radius:50%;
-  background:#fff;
-  display:flex;align-items:center;justify-content:center;
-  border:4px solid var(--fc);
-  box-shadow:0 8px 24px rgba(80,60,30,.15);
-  margin-bottom:8px;
-  transition:transform .2s;
-}
+/* 戰鬥 */
+#battle{background:linear-gradient(180deg,#F4F7FB 0%,#FFF9F0 100%)}
+#battle .arena{flex:1;display:flex;flex-direction:column;padding:16px;overflow-y:auto;position:relative}
+.arena-stage{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding:16px;background:rgba(255,255,255,.6);border-radius:22px;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.fighter{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center}
+.fighter .avatar{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;border:4px solid var(--fc);box-shadow:0 8px 24px rgba(80,60,30,.15);margin-bottom:8px;transition:transform .2s}
 .fighter .avatar svg{width:60px;height:60px}
-.fighter.enemy .avatar{background:#FFE0E9;border-color:#EF476F}
-.fighter .name{
-  font-size:.82rem;font-weight:700;margin-bottom:4px;
-}
-.fighter .hp-bar{
-  width:100%;height:10px;border-radius:999px;
-  background:rgba(0,0,0,.08);overflow:hidden;
-  max-width:120px;
-  position:relative;
-}
-.fighter .hp-fill{
-  height:100%;
-  background:linear-gradient(90deg,#06D6A0,#2EC4B6);
-  border-radius:999px;
-  transition:width .5s cubic-bezier(.4,0,.2,1);
-  width:100%;
-}
-.fighter.enemy .hp-fill{
-  background:linear-gradient(90deg,#EF476F,#F72585);
-}
-.fighter .hp-text{
-  font-size:.68rem;color:var(--soft);margin-top:3px;font-weight:600;
-}
-.vs-badge{
-  font-family:'Baloo 2',cursive;
-  font-size:1.2rem;font-weight:800;
-  color:var(--soft);
-  opacity:.6;
-}
+.fighter.enemy .avatar{background:#FFE0E9;border-color:#EF476F;font-size:2.4rem}
+.fighter .name{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.fighter .hp-bar{width:100%;height:10px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden;max-width:120px;position:relative}
+.fighter .hp-fill{height:100%;background:linear-gradient(90deg,#06D6A0,#2EC4B6);border-radius:999px;transition:width .5s cubic-bezier(.4,0,.2,1);width:100%}
+.fighter.enemy .hp-fill{background:linear-gradient(90deg,#EF476F,#F72585)}
+.fighter .hp-text{font-size:.68rem;color:var(--soft);margin-top:3px;font-weight:600}
+.vs-badge{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--soft);opacity:.6}
 
-/* 戰鬥訊息 */
-.battle-msg{
-  text-align:center;
-  padding:10px 16px;
-  font-size:.85rem;font-weight:600;
-  color:var(--soft);
-  min-height:36px;
-  transition:all .2s;
-}
+.battle-msg{text-align:center;padding:10px 16px;font-size:.85rem;font-weight:600;color:var(--soft);min-height:36px;transition:all .2s}
 .battle-msg.good{color:#06D6A0}
 .battle-msg.bad{color:#EF476F}
 
-/* 題目卡 */
-.question-card{
-  background:#fff;
-  border-radius:var(--radius);
-  padding:22px 20px;
-  box-shadow:0 12px 36px rgba(80,60,30,.12);
-  border:1px solid var(--line);
-  max-width:560px;
-  margin:0 auto;
-  width:100%;
-}
-.question-card .q-label{
-  font-size:.7rem;font-weight:700;
-  letter-spacing:.15em;color:var(--soft);
-  margin-bottom:10px;
-  display:flex;justify-content:space-between;
-}
-.question-card .q-label .q-progress{
-  color:var(--fc,#F5A623);
-}
-.question-text{
-  font-size:1rem;font-weight:700;
-  line-height:1.7;
-  margin-bottom:18px;
-}
+.question-card{background:#fff;border-radius:22px;padding:22px 20px;box-shadow:0 12px 36px rgba(80,60,30,.12);border:1px solid var(--line);max-width:560px;margin:0 auto;width:100%}
+.question-card .q-label{font-size:.7rem;font-weight:700;letter-spacing:.15em;color:var(--soft);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.question-card .q-label .q-progress{color:var(--fc,#F5A623)}
+.diff-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:.6rem;font-weight:800;letter-spacing:.05em}
+.diff-1{background:#E8FBF3;color:#06D6A0}
+.diff-2{background:#FFF3D6;color:#B8860B}
+.diff-3{background:#FDE5EC;color:#C42F4D}
+.question-text{font-size:1rem;font-weight:700;line-height:1.7;margin-bottom:18px;font-family:'Baloo 2','Noto Sans TC',sans-serif}
 .answers{display:flex;flex-direction:column;gap:10px}
-.answer-btn{
-  padding:14px 16px;
-  border-radius:14px;
-  background:#FBF8F3;
-  border:2px solid var(--line);
-  font-size:.88rem;font-weight:500;
-  text-align:left;
-  line-height:1.6;
-  color:var(--ink);
-  transition:all .2s;
-  display:flex;align-items:flex-start;gap:10px;
-}
-.answer-btn:hover:not(:disabled){
-  border-color:var(--fc,#F5A623);
-  background:#fff;
-  transform:translateX(4px);
-}
-.answer-btn .key{
-  flex-shrink:0;
-  width:24px;height:24px;border-radius:50%;
-  background:#EFE7DC;color:var(--soft);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.72rem;font-weight:800;
-  transition:all .2s;
-}
+.answer-btn{padding:14px 16px;border-radius:14px;background:#FBF8F3;border:2px solid var(--line);font-size:.88rem;font-weight:500;text-align:left;line-height:1.6;color:var(--ink);transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+.answer-btn:hover:not(:disabled){border-color:var(--fc,#F5A623);background:#fff;transform:translateX(4px)}
+.answer-btn .key{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#EFE7DC;color:var(--soft);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;transition:all .2s}
 .answer-btn:hover:not(:disabled) .key{background:var(--fc,#F5A623);color:#fff}
-.answer-btn.correct{
-  border-color:#06D6A0;background:#E8FBF3;
-}
+.answer-btn.correct{border-color:#06D6A0;background:#E8FBF3}
 .answer-btn.correct .key{background:#06D6A0;color:#fff}
-.answer-btn.wrong{
-  border-color:#EF476F;background:#FDE5EC;
-}
+.answer-btn.wrong{border-color:#EF476F;background:#FDE5EC}
 .answer-btn.wrong .key{background:#EF476F;color:#fff}
 .answer-btn:disabled{cursor:default}
 
-/* 結果彈窗 */
-.result-popup{
-  position:fixed;inset:0;
-  background:rgba(20,20,30,.6);
-  backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;
-  z-index:100;padding:24px;
-}
+/* 彈窗 */
+.result-popup{position:fixed;inset:0;background:rgba(20,20,30,.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100;padding:24px}
 .result-popup.show{display:flex;animation:fadeIn .3s}
-.result-popup .popup{
-  background:#fff;
-  border-radius:28px;
-  padding:32px 26px;
-  max-width:400px;width:100%;
-  text-align:center;
-  animation:popIn .4s cubic-bezier(.2,1.4,.4,1);
-  box-shadow:0 30px 80px rgba(0,0,0,.3);
-}
-@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.result-popup .popup .popup-emoji{
-  font-size:4rem;display:block;margin-bottom:12px;
-  animation:bob 1.4s ease-in-out infinite;
-}
-.result-popup .popup h2{
-  font-family:'Baloo 2',cursive;
-  font-size:1.8rem;font-weight:800;
-  margin-bottom:8px;
-}
-.result-popup .popup .popup-sub{
-  color:var(--soft);font-size:.9rem;
-  margin-bottom:20px;line-height:1.7;
-}
-.result-popup .popup .popup-rewards{
-  display:flex;justify-content:center;gap:12px;
-  margin-bottom:24px;
-}
-.result-popup .popup .reward{
-  background:#FFF3D6;
-  border:2px solid #F5D89A;
-  border-radius:14px;
-  padding:10px 16px;
-  font-size:.85rem;font-weight:700;
-  color:#8B6914;
-  display:flex;align-items:center;gap:6px;
-}
-.result-popup .popup .popup-actions{
-  display:flex;gap:10px;
-}
-.result-popup .popup .popup-actions button{
-  flex:1;
-  padding:14px 20px;
-  border-radius:999px;
-  font-size:.92rem;font-weight:700;
-}
-.result-popup .popup .popup-actions .btn-primary{
-  background:var(--ink);color:#fff;
-}
-.result-popup .popup .popup-actions .btn-ghost{
-  background:#FBF8F3;color:var(--ink);
-  border:2px solid var(--line);
-}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.result-popup .popup{background:#fff;border-radius:28px;padding:32px 26px;max-width:400px;width:100%;text-align:center;animation:popIn .4s cubic-bezier(.2,1.4,.4,1);box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.popup-emoji{font-size:4rem;display:block;margin-bottom:12px}
+.popup h2{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;margin-bottom:8px}
+.popup .sub{color:var(--soft);font-size:.9rem;margin-bottom:20px;line-height:1.7}
+.popup-rewards{display:flex;justify-content:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.reward{background:#FFF3D6;border:2px solid #F5D89A;border-radius:14px;padding:10px 16px;font-size:.85rem;font-weight:700;color:#8B6914;display:flex;align-items:center;gap:6px}
+.popup-actions{display:flex;gap:10px}
+.popup-actions button{flex:1;padding:14px 20px;border-radius:999px;font-size:.92rem;font-weight:700}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-ghost{background:#FBF8F3;color:var(--ink);border:2px solid var(--line)}
 
-/* ===== 圖鑑 ===== */
-#dex .dex-body{
-  flex:1;overflow-y:auto;
-  padding:16px 16px 100px;
-}
-.dex-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:12px;
-  max-width:640px;margin:0 auto;
-}
-.dex-card{
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:20px;
-  padding:16px 12px;
-  text-align:center;
-  transition:all .25s;
-  position:relative;
-}
-.dex-card.locked{
-  background:#F4F1EC;
-  opacity:.5;
-}
-.dex-card:not(.locked):hover{
-  transform:translateY(-4px);
-  border-color:var(--dc);
-  box-shadow:0 12px 32px rgba(80,60,30,.14);
-}
-.dex-card .dc-avatar{
-  width:70px;height:70px;margin:0 auto 8px;
-  border-radius:50%;
-  background:linear-gradient(140deg,var(--dc-light),#fff);
-  border:3px solid #fff;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 12px rgba(80,60,30,.1);
-}
+/* 圖鑑 */
+#dex .dex-body{flex:1;overflow-y:auto;padding:16px 16px 100px}
+.dex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;max-width:640px;margin:0 auto}
+.dex-card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px 12px;text-align:center;transition:all .25s;position:relative;cursor:pointer}
+.dex-card.locked{background:#F4F1EC;opacity:.55;cursor:default}
+.dex-card:not(.locked):hover{transform:translateY(-4px);border-color:var(--dc);box-shadow:0 12px 32px rgba(80,60,30,.14)}
+.dex-card .dc-avatar{width:70px;height:70px;margin:0 auto 8px;border-radius:50%;background:linear-gradient(140deg,var(--dc-light),#fff);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(80,60,30,.1)}
 .dex-card .dc-avatar svg{width:52px;height:52px}
-.dex-card.locked .dc-avatar{background:#E8E4DD}
-.dex-card.locked .dc-avatar::before{
-  content:'?';font-size:2rem;font-weight:800;color:#B8B0A0;
-}
-.dex-card .dc-name{
-  font-family:'Baloo 2',cursive;
-  font-size:.9rem;font-weight:800;
-  color:var(--dc);
-  margin-bottom:2px;
-}
+.dex-card.locked .dc-avatar::before{content:'?';font-size:2rem;font-weight:800;color:#B8B0A0}
+.dex-card .dc-name{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--dc);margin-bottom:2px}
 .dex-card.locked .dc-name{color:var(--soft)}
-.dex-card .dc-tag{
-  font-size:.65rem;color:var(--soft);font-weight:600;
-}
-.dex-card .dc-level{
-  position:absolute;top:8px;right:8px;
-  font-size:.6rem;font-weight:800;
-  background:var(--dc);color:#fff;
-  padding:2px 8px;border-radius:999px;
-}
+.dex-card .dc-tag{font-size:.65rem;color:var(--soft);font-weight:600}
+.dex-card .dc-level{position:absolute;top:8px;right:8px;font-size:.6rem;font-weight:800;background:var(--dc);color:#fff;padding:2px 8px;border-radius:999px}
 
-/* ===== 底部導航 ===== */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(14px);
-  border-top:1px solid var(--line);
-  display:flex;justify-content:space-around;
-  padding:8px 0 max(8px,env(safe-area-inset-bottom));
-  z-index:50;
-}
-.bottom-nav .nav-item{
-  flex:1;
-  display:flex;flex-direction:column;align-items:center;
-  gap:2px;
-  padding:8px;
-  color:var(--soft);
-  font-size:.68rem;font-weight:600;
-  transition:all .2s;
-}
+/* 底部導航 */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));z-index:50}
+.bottom-nav .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px;color:var(--soft);font-size:.68rem;font-weight:600;transition:all .2s}
 .bottom-nav .nav-item.active{color:var(--ink)}
-.bottom-nav .nav-item .ni-icon{
-  font-size:1.3rem;line-height:1;
-}
+.bottom-nav .nav-item .ni-icon{font-size:1.3rem;line-height:1}
 .bottom-nav .nav-item.active .ni-icon{transform:scale(1.15)}
 
-/* ===== 物理獸選擇 ===== */
-#select .select-body{
-  flex:1;overflow-y:auto;
-  padding:16px 16px 100px;
-}
-.select-hint{
-  text-align:center;color:var(--soft);font-size:.85rem;
-  margin-bottom:16px;
-}
-.select-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  gap:12px;max-width:640px;margin:0 auto;
-}
-.select-card{
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:20px;
-  padding:14px 10px;text-align:center;
-  transition:all .25s;
-  cursor:pointer;
-}
-.select-card:hover{
-  transform:translateY(-4px);
-  border-color:var(--sc);
-  box-shadow:0 12px 32px rgba(80,60,30,.14);
-}
-.select-card .sc-avatar{
-  width:64px;height:64px;margin:0 auto 8px;
-  border-radius:50%;
-  background:linear-gradient(140deg,var(--sc-light),#fff);
-  display:flex;align-items:center;justify-content:center;
-  border:3px solid #fff;
-  box-shadow:0 4px 12px rgba(80,60,30,.1);
-}
+/* 選擇 */
+#select .select-body{flex:1;overflow-y:auto;padding:16px 16px 100px}
+.select-hint{text-align:center;color:var(--soft);font-size:.85rem;margin-bottom:16px}
+.select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;max-width:640px;margin:0 auto}
+.select-card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px 10px;text-align:center;transition:all .25s;cursor:pointer}
+.select-card:hover{transform:translateY(-4px);border-color:var(--sc);box-shadow:0 12px 32px rgba(80,60,30,.14)}
+.select-card .sc-avatar{width:64px;height:64px;margin:0 auto 8px;border-radius:50%;background:linear-gradient(140deg,var(--sc-light),#fff);display:flex;align-items:center;justify-content:center;border:3px solid #fff;box-shadow:0 4px 12px rgba(80,60,30,.1)}
 .select-card .sc-avatar svg{width:48px;height:48px}
-.select-card .sc-name{
-  font-family:'Baloo 2',cursive;
-  font-size:.88rem;font-weight:800;color:var(--sc);
-  margin-bottom:2px;
-}
-.select-card .sc-lv{
-  font-size:.65rem;color:var(--soft);font-weight:600;
-}
+.select-card .sc-name{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--sc);margin-bottom:2px}
+.select-card .sc-lv{font-size:.65rem;color:var(--soft);font-weight:600}
 
-/* ===== 提示 ===== */
-.toast{
-  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);
-  background:var(--ink);color:#fff;
-  padding:12px 22px;border-radius:999px;
-  font-size:.85rem;font-weight:600;
-  z-index:200;
-  box-shadow:0 12px 32px rgba(0,0,0,.2);
-  transition:transform .3s cubic-bezier(.2,1.4,.4,1);
-  pointer-events:none;
-}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.85rem;font-weight:600;z-index:200;box-shadow:0 12px 32px rgba(0,0,0,.2);transition:transform .3s cubic-bezier(.2,1.4,.4,1);pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* ===== 攻擊動畫 ===== */
-@keyframes attackRight{
-  0%{transform:translateX(0)}
-  40%{transform:translateX(30px) scale(1.05)}
-  100%{transform:translateX(0)}
-}
-@keyframes attackLeft{
-  0%{transform:translateX(0)}
-  40%{transform:translateX(-30px) scale(1.05)}
-  100%{transform:translateX(0)}
-}
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-6px)}
-  80%{transform:translateX(6px)}
-}
+@keyframes attackRight{0%{transform:translateX(0)}40%{transform:translateX(30px) scale(1.05)}100%{transform:translateX(0)}}
+@keyframes attackLeft{0%{transform:translateX(0)}40%{transform:translateX(-30px) scale(1.05)}100%{transform:translateX(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
 .attack-r{animation:attackRight .4s ease}
 .attack-l{animation:attackLeft .4s ease}
 .shake{animation:shake .4s ease}
@@ -567,81 +164,43 @@ button:active{transform:scale(.96)}
 </head>
 <body>
 
-<!-- ===== 載入 ===== -->
-<div class="screen active" id="loading">
-  <div>
-    <div class="logo">⚡ Physics Pals</div>
-    <div class="sub">載入中...</div>
-  </div>
-</div>
-
-<!-- ===== 開始 ===== -->
-<div class="screen" id="start">
-  <div class="start-inner">
+<!-- 開始 -->
+<div class="screen active" id="start">
+  <div class="inner">
     <h1>物理獸 DSE</h1>
-    <p class="tagline">可愛養成 × 物理解謎 × DSE 訓練</p>
-    <div class="pals-preview">
-      <div class="pp">🐱</div>
-      <div class="pp">⚡</div>
-      <div class="pp">🐰</div>
-      <div class="pp">🐧</div>
-      <div class="pp">🐻</div>
-      <div class="pp">🦉</div>
-      <div class="pp">🦊</div>
-      <div class="pp">🦦</div>
-      <div class="pp">🐶</div>
+    <p class="tag">Physics Pals · 可愛養成 × 物理解謎 × DSE 訓練</p>
+    <div class="pals">
+      <div class="pp">🐱</div><div class="pp">⚡</div><div class="pp">🐰</div>
+      <div class="pp">🐧</div><div class="pp">🐻</div><div class="pp">🦉</div>
+      <div class="pp">🦊</div><div class="pp">🦦</div><div class="pp">🐶</div>
     </div>
     <button class="start-btn" id="btnNewGame">開始新遊戲</button>
     <button class="start-btn ghost" id="btnContinue" style="display:none">繼續遊戲</button>
   </div>
 </div>
 
-<!-- ===== 主畫面（地圖/圖鑑） ===== -->
+<!-- 主畫面 -->
 <div class="screen" id="main">
-  <!-- 地圖頁 -->
   <div id="map" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
     <div class="topbar">
-      <div class="tb-left">
-        <div class="tb-title">🗺️ 物理島</div>
-      </div>
+      <div class="tb-left"><div class="tb-title">🗺️ 物理島</div></div>
       <div class="tb-right">
-        <div class="coin-pill">
-          <span class="cp-emoji">⚡</span>
-          <span id="coinCount">0</span>
-        </div>
+        <div class="coin-pill"><span class="cp-emoji">⚡</span><span id="coinCount">0</span></div>
       </div>
     </div>
-    <div class="map-body">
-      <div class="zone-list" id="zoneList"></div>
-    </div>
+    <div class="map-body"><div class="zone-list" id="zoneList"></div></div>
   </div>
-
-  <!-- 圖鑑頁 -->
   <div id="dex" style="display:none;flex-direction:column;flex:1;overflow:hidden">
-    <div class="topbar">
-      <div class="tb-left">
-        <div class="tb-title">📖 物理獸圖鑑</div>
-      </div>
-    </div>
-    <div class="dex-body">
-      <div class="dex-grid" id="dexGrid"></div>
-    </div>
+    <div class="topbar"><div class="tb-left"><div class="tb-title">📖 物理獸圖鑑</div></div></div>
+    <div class="dex-body"><div class="dex-grid" id="dexGrid"></div></div>
   </div>
-
-  <!-- 底部導航 -->
   <div class="bottom-nav">
-    <button class="nav-item active" data-page="map">
-      <span class="ni-icon">🗺️</span>
-      <span>地圖</span>
-    </button>
-    <button class="nav-item" data-page="dex">
-      <span class="ni-icon">📖</span>
-      <span>圖鑑</span>
-    </button>
+    <button class="nav-item active" data-page="map"><span class="ni-icon">🗺️</span><span>地圖</span></button>
+    <button class="nav-item" data-page="dex"><span class="ni-icon">📖</span><span>圖鑑</span></button>
   </div>
 </div>
 
-<!-- ===== 物理獸選擇 ===== -->
+<!-- 選擇 -->
 <div class="screen" id="select">
   <div class="topbar">
     <div class="tb-left">
@@ -655,7 +214,7 @@ button:active{transform:scale(.96)}
   </div>
 </div>
 
-<!-- ===== 戰鬥 ===== -->
+<!-- 戰鬥 -->
 <div class="screen" id="battle">
   <div class="topbar">
     <div class="tb-left">
@@ -663,15 +222,10 @@ button:active{transform:scale(.96)}
       <div class="tb-title" id="battleTitle">戰鬥中</div>
     </div>
     <div class="tb-right">
-      <div class="coin-pill">
-        <span class="cp-emoji">⚡</span>
-        <span id="coinCountBattle">0</span>
-      </div>
+      <div class="coin-pill"><span class="cp-emoji">⚡</span><span id="coinCountBattle">0</span></div>
     </div>
   </div>
-
   <div class="arena">
-    <!-- 戰鬥舞台 -->
     <div class="arena-stage">
       <div class="fighter enemy" id="enemyFighter">
         <div class="avatar" id="enemyAvatar">👾</div>
@@ -687,10 +241,7 @@ button:active{transform:scale(.96)}
         <div class="hp-text" id="playerHpText">100 / 100</div>
       </div>
     </div>
-
     <div class="battle-msg" id="battleMsg">準備戰鬥...</div>
-
-    <!-- 題目 -->
     <div class="question-card" id="questionCard">
       <div class="q-label">
         <span id="qCategory">FORCE & MOTION</span>
@@ -702,12 +253,12 @@ button:active{transform:scale(.96)}
   </div>
 </div>
 
-<!-- ===== 結算彈窗 ===== -->
+<!-- 結算 -->
 <div class="result-popup" id="resultPopup">
   <div class="popup">
     <span class="popup-emoji" id="popupEmoji">🏆</span>
     <h2 id="popupTitle">勝利！</h2>
-    <p class="popup-sub" id="popupSub">你打敗咗迷思獸！</p>
+    <p class="sub" id="popupSub"></p>
     <div class="popup-rewards" id="popupRewards"></div>
     <div class="popup-actions">
       <button class="btn-ghost" id="popupBack">返回地圖</button>
@@ -716,7 +267,6 @@ button:active{transform:scale(.96)}
   </div>
 </div>
 
-<!-- ===== Toast ===== -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -729,7 +279,7 @@ var PALS = [
    svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="26" ry="22" fill="#F5A623"/><circle cx="50" cy="44" r="18" fill="#F5A623"/><path d="M 34 32 L 30 20 L 42 28 Z" fill="#F5A623"/><path d="M 66 32 L 70 20 L 58 28 Z" fill="#F5A623"/><circle cx="50" cy="30" r="7" fill="#E63946"/><path d="M 50 24 Q 52 20 54 24" stroke="#4A7C2F" stroke-width="2" fill="none"/><circle cx="44" cy="44" r="2.5" fill="#2c2c2c"/><circle cx="56" cy="44" r="2.5" fill="#2c2c2c"/><path d="M 46 52 Q 50 55 54 52" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'},
   {key:'zappy', name:'電電', en:'Zappy Eel', color:'#FFB703', light:'#FFF6DD',
    zone:'電磁都市', emoji:'⚡',
-   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="30" ry="20" fill="#FFB703"/><path d="M 20 58 Q 30 50 50 58 Q 70 66 80 58" stroke="#3A0CA3" stroke-width="3" fill="none"/><circle cx="42" cy="48" r="3" fill="#2c2c2c"/><circle cx="58" cy="48" r="3" fill="#2c2c2c"/><path d="M 44 60 Q 50 64 56 60" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 78 60 L 84 56 L 82 62 L 88 60" stroke="#3A0CA3" stroke-width="2" fill="none"/></svg>'},
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="30" ry="20" fill="#FFB703"/><path d="M 20 58 Q 30 50 50 58 Q 70 66 80 58" stroke="#3A0CA3" stroke-width="3" fill="none"/><circle cx="42" cy="48" r="3" fill="#2c2c2c"/><circle cx="58" cy="48" r="3" fill="#2c2c2c"/><path d="M 44 60 Q 50 64 56 60" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'},
   {key:'wavey', name:'波波', en:'Wavey Rabbit', color:'#2EC4B6', light:'#E0F7F4',
    zone:'波動湖', emoji:'🐰',
    svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="56" r="22" fill="#2EC4B6"/><path d="M 38 30 Q 42 14 46 30 Q 50 46 54 30 Q 58 14 62 30" stroke="#2EC4B6" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="42" cy="52" r="3" fill="#2c2c2c"/><circle cx="58" cy="52" r="3" fill="#2c2c2c"/><path d="M 45 62 Q 50 66 55 62" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'},
@@ -747,119 +297,215 @@ var PALS = [
    svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="54" r="20" fill="#F72585"/><path d="M 30 40 L 24 28 L 38 36 Z" fill="#F72585"/><path d="M 70 40 L 76 28 L 62 36 Z" fill="#F72585"/><circle cx="42" cy="50" r="3" fill="#2c2c2c"/><circle cx="58" cy="50" r="3" fill="#2c2c2c"/><ellipse cx="50" cy="60" rx="3.5" ry="2.5" fill="#2c2c2c"/><ellipse cx="50" cy="78" rx="16" ry="5" fill="none" stroke="#4CC9F0" stroke-width="2"/><circle cx="66" cy="78" r="2.5" fill="#4CC9F0"/><circle cx="34" cy="78" r="2.5" fill="#4CC9F0"/></svg>'},
   {key:'joule', name:'能量水獺', en:'Joule Otter', color:'#FF9F1C', light:'#FFEED4',
    zone:'能源綠洲', emoji:'🦦',
-   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="60" rx="24" ry="18" fill="#FF9F1C"/><circle cx="50" cy="42" r="16" fill="#FF9F1C"/><circle cx="36" cy="32" r="6" fill="#FF9F1C"/><circle cx="64" cy="32" r="6" fill="#FF9F1C"/><circle cx="44" cy="40" r="2.5" fill="#2c2c2c"/><circle cx="56" cy="40" r="2.5" fill="#2c2c2c"/><ellipse cx="50" cy="48" rx="3" ry="2" fill="#2c2c2c"/><path d="M 78 50 L 82 44 L 86 50 L 90 44" stroke="#2EC4B6" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>'},
+   svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="60" rx="24" ry="18" fill="#FF9F1C"/><circle cx="50" cy="42" r="16" fill="#FF9F1C"/><circle cx="36" cy="32" r="6" fill="#FF9F1C"/><circle cx="64" cy="32" r="6" fill="#FF9F1C"/><circle cx="44" cy="40" r="2.5" fill="#2c2c2c"/><circle cx="56" cy="40" r="2.5" fill="#2c2c2c"/><ellipse cx="50" cy="48" rx="3" ry="2" fill="#2c2c2c"/></svg>'},
   {key:'meddy', name:'醫醫狗', en:'Meddy Dog', color:'#00B4D8', light:'#D6F2FA',
    zone:'醫療中心', emoji:'🐶',
    svg:'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="24" ry="22" fill="#00B4D8"/><circle cx="50" cy="40" r="17" fill="#00B4D8"/><path d="M 33 30 L 28 20 L 40 28 Z" fill="#00B4D8"/><path d="M 67 30 L 72 20 L 60 28 Z" fill="#00B4D8"/><circle cx="43" cy="38" r="3" fill="#2c2c2c"/><circle cx="57" cy="38" r="3" fill="#2c2c2c"/><ellipse cx="50" cy="46" rx="3.5" ry="2.5" fill="#2c2c2c"/><rect x="38" y="58" width="24" height="20" rx="3" fill="#fff"/><path d="M 50 62 L 50 74 M 44 68 L 56 68" stroke="#00B4D8" stroke-width="2"/></svg>'}
 ];
 
-/* ============================================================
-   物理島地區
-   ============================================================ */
 var ZONES = [
-  {id:'newton', name:'牛頓競技場', sub:'Force and Motion', emoji:'🏟️', color:'#F5A623', light:'#FFF3D6', pal:'newton', required:0,
-   enemy:{emoji:'👹', name:'迷思獸 · 力力'}},
-  {id:'thermo', name:'熱力溫泉', sub:'Heat and Gases', emoji:'♨️', color:'#EF476F', light:'#FDE5EC', pal:'thermo', required:1,
-   enemy:{emoji:'🌡️', name:'迷思獸 · 熱熱怪'}},
-  {id:'wavey', name:'波動湖', sub:'Wave Motion', emoji:'🌊', color:'#2EC4B6', light:'#E0F7F4', pal:'wavey', required:2,
-   enemy:{emoji:'🎵', name:'迷思獸 · 波波妖'}},
-  {id:'zappy', name:'電磁都市', sub:'Electricity & Magnetism', emoji:'🏙️', color:'#FFB703', light:'#FFF6DD', pal:'zappy', required:3,
-   enemy:{emoji:'⚡', name:'迷思獸 · 電電魔'}},
-  {id:'nuky', name:'核能洞穴', sub:'Radioactivity & Nuclear', emoji:'☢️', color:'#8AC926', light:'#EDF8D4', pal:'nuky', required:4,
-   enemy:{emoji:'☢️', name:'迷思獸 · 輻射獸'}},
-  {id:'astro', name:'星空天文台', sub:'Astronomy & Space', emoji:'🔭', color:'#4A6FA5', light:'#E4EAF5', pal:'astro', required:5,
-   enemy:{emoji:'🌌', name:'迷思獸 · 黑洞'}},
-  {id:'atomi', name:'原子工坊', sub:'Atomic World', emoji:'⚛️', color:'#F72585', light:'#FDE0EE', pal:'atomi', required:6,
-   enemy:{emoji:'⚛️', name:'迷思獸 · 量子狐'}},
-  {id:'joule', name:'能源綠洲', sub:'Energy & Use of Energy', emoji:'🌱', color:'#FF9F1C', light:'#FFEED4', pal:'joule', required:7,
-   enemy:{emoji:'🔥', name:'迷思獸 · 浪費獸'}},
-  {id:'meddy', name:'醫療中心', sub:'Medical Physics', emoji:'🏥', color:'#00B4D8', light:'#D6F2FA', pal:'meddy', required:8,
-   enemy:{emoji:'💊', name:'迷思獸 · 輻射狗'}}
+  {id:'newton', name:'牛頓競技場', sub:'Force and Motion', emoji:'🏟️', color:'#F5A623', light:'#FFF3D6', pal:'newton',
+   enemy:{emoji:'👹', name:'Myth Beast · Force'}},
+  {id:'thermo', name:'熱力溫泉', sub:'Heat and Gases', emoji:'♨️', color:'#EF476F', light:'#FDE5EC', pal:'thermo',
+   enemy:{emoji:'🌡️', name:'Myth Beast · Heat'}},
+  {id:'wavey', name:'波動湖', sub:'Wave Motion', emoji:'🌊', color:'#2EC4B6', light:'#E0F7F4', pal:'wavey',
+   enemy:{emoji:'🎵', name:'Myth Beast · Wave'}},
+  {id:'zappy', name:'電磁都市', sub:'Electricity & Magnetism', emoji:'🏙️', color:'#FFB703', light:'#FFF6DD', pal:'zappy',
+   enemy:{emoji:'⚡', name:'Myth Beast · Current'}},
+  {id:'nuky', name:'核能洞穴', sub:'Radioactivity & Nuclear', emoji:'☢️', color:'#8AC926', light:'#EDF8D4', pal:'nuky',
+   enemy:{emoji:'☢️', name:'Myth Beast · Decay'}},
+  {id:'astro', name:'星空天文台', sub:'Astronomy & Space', emoji:'🔭', color:'#4A6FA5', light:'#E4EAF5', pal:'astro',
+   enemy:{emoji:'🌌', name:'Myth Beast · Void'}},
+  {id:'atomi', name:'原子工坊', sub:'Atomic World', emoji:'⚛️', color:'#F72585', light:'#FDE0EE', pal:'atomi',
+   enemy:{emoji:'⚛️', name:'Myth Beast · Quantum'}},
+  {id:'joule', name:'能源綠洲', sub:'Energy & Use of Energy', emoji:'🌱', color:'#FF9F1C', light:'#FFEED4', pal:'joule',
+   enemy:{emoji:'🔥', name:'Myth Beast · Waste'}},
+  {id:'meddy', name:'醫療中心', sub:'Medical Physics', emoji:'🏥', color:'#00B4D8', light:'#D6F2FA', pal:'meddy',
+   enemy:{emoji:'💊', name:'Myth Beast · Radiation'}}
 ];
 
 /* ============================================================
-   題庫（每個地區 5 題，共 45 題）
+   DSE 英文題庫（每區 8 題，分 3 個難度）
+   d: 1=Easy, 2=Medium, 3=Hard
    ============================================================ */
 var QUESTIONS = {
-  newton:[
-    {q:'2 kg 蘋果箱，施加 10 N 力，摩擦力 4 N，加速度係幾多？',a:['3 m/s²','5 m/s²','7 m/s²','2 m/s²'],c:0},
-    {q:'一個物體等速運動，代表以下邊項？',a:['淨力為零','冇力作用','加速度最大','速度最大'],c:0},
-    {q:'動量守恆定律適用喺邊種情況？',a:['系統冇外力','系統有摩擦力','系統加速','系統靜止'],c:0},
-    {q:'一個 5 kg 物體自由落體，重力加速度 10 m/s²，重力係？',a:['50 N','5 N','0.5 N','500 N'],c:0},
-    {q:'F=ma 中嘅 F 代表？',a:['淨力','摩擦力','重力','張力'],c:0}
-  ],
-  thermo:[
-    {q:'0.5 kg 20°C 水混合 0.3 kg 80°C 水，最終溫度？',a:['42.5°C','50°C','35°C','60°C'],c:0},
-    {q:'熱係咩？',a:['能量轉移','物質','溫度','分子'],c:0},
-    {q:'理想氣體 PV/T = 常數，叫咩定律？',a:['聯合氣體定律','波以耳定律','查理定律','理想氣體定律'],c:0},
-    {q:'比熱容量嘅單位係？',a:['J/kg/°C','J','W','N'],c:0},
-    {q:'冰熔化成水，需要吸收咩？',a:['潛熱','比熱','動能','位能'],c:0}
-  ],
-  wavey:[
-    {q:'聲波頻率 440 Hz，聲速 340 m/s，波長？',a:['0.773 m','0.5 m','1.0 m','0.3 m'],c:0},
-    {q:'波由一個介質進入另一介質，邊項不變？',a:['頻率','波速','波長','振幅'],c:0},
-    {q:'光嘅干涉現象證明咩？',a:['光係波','光係粒子','光有質量','光有電荷'],c:0},
-    {q:'駐波嘅波節位置有咩特徵？',a:['振幅為零','振幅最大','頻率最高','波速最快'],c:0},
-    {q:'超聲波頻率高於？',a:['20000 Hz','20 Hz','200 Hz','2000 Hz'],c:0}
-  ],
-  zappy:[
-    {q:'6Ω 同 3Ω 並聯，等效電阻？',a:['2Ω','9Ω','18Ω','3Ω'],c:0},
-    {q:'電壓嘅定義係？',a:['每單位電荷嘅能量','電流乘電阻','電荷乘時間','功率除電阻'],c:0},
-    {q:'歐姆定律 V = ?',a:['IR','I/R','R/I','I²R'],c:0},
-    {q:'電磁感應由邊個發現？',a:['法拉第','歐姆','安培','庫倫'],c:0},
-    {q:'變壓器可以改變咩？',a:['電壓','頻率','電荷','電阻'],c:0}
-  ],
-  nuky:[
-    {q:'初始活度 800 Bq，半衰期 5 日，15 日後活度？',a:['100 Bq','200 Bq','400 Bq','50 Bq'],c:0},
-    {q:'α 粒子係咩？',a:['氦原子核','電子','光子','中子'],c:0},
-    {q:'半衰期會受溫度影響嗎？',a:['唔會','會','高溫縮短','低溫延長'],c:0},
-    {q:'核裂變會釋放咩？',a:['能量','質量','電荷','光子'],c:0},
-    {q:'γ 射線嘅穿透力比 α 粒子？',a:['強','弱','一樣','視情況'],c:0}
-  ],
-  astro:[
-    {q:'地球軌道速度大約係？',a:['8 km/s','3 km/s','15 km/s','1 km/s'],c:0},
-    {q:'宇宙膨脹嘅證據係？',a:['紅移','藍移','重力','光譜'],c:0},
-    {q:'重力加速度 g 喺地球表面大約係？',a:['9.8 m/s²','10 m/s²','8 m/s²','12 m/s²'],c:0},
-    {q:'逃逸速度取決於？',a:['天體質量同半徑','溫度','大氣','時間'],c:0},
-    {q:'光年係咩單位？',a:['距離','時間','速度','質量'],c:0}
-  ],
-  atomi:[
-    {q:'功函數 2.0 eV，光頻率 1.0×10¹⁵ Hz，最大動能？',a:['2.14 eV','4.14 eV','2.0 eV','6.14 eV'],c:0},
-    {q:'光電效應證明光有咩性質？',a:['粒子性','波動性','質量','電荷'],c:0},
-    {q:'光子能量取決於？',a:['頻率','強度','波長','速度'],c:0},
-    {q:'能階躍遷會釋放或吸收咩？',a:['光子','電子','中子','質子'],c:0},
-    {q:'氫原子光譜屬於？',a:['線狀光譜','連續光譜','吸收光譜','帶狀光譜'],c:0}
-  ],
-  joule:[
-    {q:'功率嘅單位係？',a:['W','J','N','V'],c:0},
-    {q:'能源效率永遠？',a:['細於 100%','等於 100%','大於 100%','等於 0'],c:0},
-    {q:'邊種係可再生能源？',a:['太陽能','煤','石油','天然氣'],c:0},
-    {q:'功率 = 能量 ÷ ?',a:['時間','距離','力','質量'],c:0},
-    {q:'1 kWh 等於幾多 J？',a:['3.6×10⁶ J','1000 J','3600 J','60 J'],c:0}
-  ],
-  meddy:[
-    {q:'X 光影像對比度取決於？',a:['組織衰減差異','時間','溫度','電流'],c:0},
-    {q:'超聲波檢查用嘅頻率大約？',a:['1–10 MHz','20 Hz','100 Hz','1000 Hz'],c:0},
-    {q:'放射治療用嘅射線主要係？',a:['X 光 / γ 射線','α 粒子','β 粒子','聲波'],c:0},
-    {q:'輻射劑量單位係？',a:['Sv','W','J','V'],c:0},
-    {q:'超聲波對人體有咩好處？',a:['非侵入性','有輻射','高成本','低解析度'],c:0}
-  ]
+newton:[
+  {d:1, q:'A 2 kg box is pushed on a rough horizontal floor by a 10 N horizontal force. Friction is 4 N. What is the acceleration?',
+   opts:['3 m/s²','5 m/s²','7 m/s²','2 m/s²'], c:0},
+  {d:1, q:'Which quantity is a vector?',
+   opts:['Velocity','Speed','Mass','Energy'], c:0},
+  {d:1, q:'A body moves at constant velocity. What can you conclude?',
+   opts:['The net force is zero','No force acts on it','Its acceleration is maximum','Its speed is maximum'], c:0},
+  {d:2, q:'A 5 kg object falls freely from 20 m. Find its speed just before hitting the ground. (g = 10 m/s²)',
+   opts:['20 m/s','10 m/s','40 m/s','5 m/s'], c:0},
+  {d:2, q:'A 1500 kg car accelerates from rest to 20 m/s in 10 s. Find the average net force.',
+   opts:['3000 N','1500 N','300 N','30000 N'], c:0},
+  {d:2, q:'A 2 kg ball moving at 3 m/s to the right collides with a 4 kg ball at rest. They stick together. Find the common velocity.',
+   opts:['1 m/s to the right','1.5 m/s to the right','0.5 m/s to the right','3 m/s to the right'], c:0},
+  {d:3, q:'A 60 kg man climbs a 5 m staircase. What is the gain in gravitational potential energy? (g = 10 m/s²)',
+   opts:['3000 J','300 J','600 J','30 J'], c:0},
+  {d:3, q:'An object undergoes uniform circular motion. Which is constant?',
+   opts:['Speed','Velocity','Acceleration','Net force direction'], c:0}
+],
+thermo:[
+  {d:1, q:'Heat is best described as:',
+   opts:['Energy transferred due to temperature difference','A form of matter','A measure of temperature','A type of work'], c:0},
+  {d:1, q:'Which is the SI unit of specific heat capacity?',
+   opts:['J kg⁻¹ K⁻¹','J','W','N'], c:0},
+  {d:1, q:'Which gas law relates pressure and volume at constant temperature?',
+   opts:["Boyle's law","Charles' law","Pressure law","Avogadro's law"], c:0},
+  {d:2, q:'0.5 kg of water at 20°C is mixed with 0.3 kg of water at 80°C. Find the final temperature. (c = 4200 J kg⁻¹ K⁻¹)',
+   opts:['42.5°C','50°C','35°C','60°C'], c:0},
+  {d:2, q:'How much energy is needed to melt 2 kg of ice at 0°C? (Lf = 334 kJ kg⁻¹)',
+   opts:['668 kJ','334 kJ','167 kJ','1336 kJ'], c:0},
+  {d:2, q:'A gas has pressure 100 kPa at 300 K in a fixed volume. What is the pressure at 600 K?',
+   opts:['200 kPa','150 kPa','50 kPa','400 kPa'], c:0},
+  {d:3, q:'Why does water heat up more slowly than iron for the same energy?',
+   opts:['Water has a higher specific heat capacity','Water has a lower density','Iron has a higher melting point','Iron has less mass'], c:0},
+  {d:3, q:'1 mol of an ideal gas occupies 22.4 L at 1 atm and 273 K. What volume does it occupy at 2 atm and 273 K?',
+   opts:['11.2 L','22.4 L','44.8 L','5.6 L'], c:0}
+],
+wavey:[
+  {d:1, q:'A sound wave has frequency 440 Hz. If the speed of sound is 340 m/s, find the wavelength.',
+   opts:['0.773 m','1.29 m','0.34 m','4.40 m'], c:0},
+  {d:1, q:'When light travels from air into glass, which quantity remains unchanged?',
+   opts:['Frequency','Wavelength','Speed','Direction'], c:0},
+  {d:1, q:'Which phenomenon best demonstrates the wave nature of light?',
+   opts:['Interference','Photoelectric effect','Reflection','Absorption'], c:0},
+  {d:2, q:'In a stationary wave, a node is a point where:',
+   opts:['Amplitude is zero','Amplitude is maximum','Frequency is zero','Wavelength is zero'], c:0},
+  {d:2, q:'Ultrasound is defined as sound with frequency:',
+   opts:['Above 20 kHz','Below 20 Hz','Between 20 Hz and 20 kHz','Exactly 20 kHz'], c:0},
+  {d:2, q:'Which of the following shows total internal reflection can occur?',
+   opts:['Light travels from glass to air at an angle greater than the critical angle','Light travels from air to glass at any angle','Light reflects off a mirror','Light bends around a corner'], c:0},
+  {d:3, q:'In a Young\'s double-slit experiment, increasing the wavelength of light will:',
+   opts:['Increase fringe separation','Decrease fringe separation','Keep fringe separation constant','Make fringes disappear'], c:0},
+  {d:3, q:'Two waves have the same frequency and travel in the same direction. What determines if they interfere constructively?',
+   opts:['Their phase difference','Their amplitude only','Their speed only','Their medium only'], c:0}
+],
+zappy:[
+  {d:1, q:'A 6 Ω and a 3 Ω resistor are connected in parallel. Find the equivalent resistance.',
+   opts:['2 Ω','9 Ω','18 Ω','3 Ω'], c:0},
+  {d:1, q:'Voltage is defined as:',
+   opts:['Energy per unit charge','Current × charge','Charge per unit time','Power × resistance'], c:0},
+  {d:1, q:'Ohm\'s law states that V equals:',
+   opts:['IR','I/R','R/I','I²R'], c:0},
+  {d:2, q:'When the above combination (2 Ω) is connected to a 12 V supply, find the total current.',
+   opts:['6 A','2 A','4 A','12 A'], c:0},
+  {d:2, q:'Electromagnetic induction was discovered by:',
+   opts:['Faraday','Ohm','Ampere','Coulomb'], c:0},
+  {d:2, q:'A transformer can change:',
+   opts:['AC voltage','Frequency','Charge','Resistance'], c:0},
+  {d:3, q:'A wire carries a current of 3 A. How much charge passes a point in 5 minutes?',
+   opts:['900 C','15 C','60 C','180 C'], c:0},
+  {d:3, q:'A charged particle moves parallel to a magnetic field. The magnetic force on it is:',
+   opts:['Zero','Maximum','Equal to qvB','Equal to qE'], c:0}
+],
+nuky:[
+  {d:1, q:'An α-particle is:',
+   opts:['A helium nucleus','An electron','A photon','A neutron'], c:0},
+  {d:1, q:'Does temperature affect the half-life of a radioactive sample?',
+   opts:['No','Yes, it shortens it','Yes, it lengthens it','Only under high pressure'], c:0},
+  {d:1, q:'Which radiation has the greatest penetrating power?',
+   opts:['γ-rays','α-particles','β-particles','Sound waves'], c:0},
+  {d:2, q:'A radioactive sample has an initial activity of 800 Bq and a half-life of 5 days. What is its activity after 15 days?',
+   opts:['100 Bq','200 Bq','400 Bq','50 Bq'], c:0},
+  {d:2, q:'In nuclear fission, which quantity is released?',
+   opts:['Energy','Charge','Mass','Light'], c:0},
+  {d:2, q:'Which is a correct safety precaution when handling radioactive sources?',
+   opts:['Use tongs and keep the source away from the body','Wear thin cotton gloves','Keep the source in a warm place','Store it near food'], c:0},
+  {d:3, q:'In β-decay, a neutron changes into:',
+   opts:['A proton and an electron','Two protons','A proton and a positron','An electron only'], c:0},
+  {d:3, q:'A sample of 10 g of a radioactive isotope has half-life 4 days. What mass remains after 12 days?',
+   opts:['1.25 g','2.5 g','5 g','0.625 g'], c:0}
+],
+astro:[
+  {d:1, q:'Which observation supports the expansion of the universe?',
+   opts:['Redshift of distant galaxies','The Moon orbiting Earth','Sunspots','Gravitational lensing'], c:0},
+  {d:1, q:'The acceleration due to gravity at the Earth\'s surface is about:',
+   opts:['9.8 m/s²','1.6 m/s²','3.7 m/s²','20 m/s²'], c:0},
+  {d:1, q:'A light-year is a unit of:',
+   opts:['Distance','Time','Speed','Mass'], c:0},
+  {d:2, q:'Escape velocity from a planet depends on:',
+   opts:["The planet's mass and radius","The object's mass","The object's shape","The temperature"], c:0},
+  {d:2, q:'The orbital speed of a satellite in a circular orbit depends on:',
+   opts:['Orbital radius only','Satellite mass','Satellite shape','Time of day'], c:0},
+  {d:2, q:'Which of the following is NOT true for a geostationary satellite?',
+   opts:['It orbits above the equator','Its period is 24 hours','It appears fixed in the sky','It has an elliptical orbit'], c:0},
+  {d:3, q:'Two planets have radii in the ratio 1:2 and equal masses. What is the ratio of their surface gravitational field strengths?',
+   opts:['4:1','2:1','1:2','1:4'], c:0},
+  {d:3, q:'Kepler\'s third law states that T² ∝ r³. This implies that:',
+   opts:['Outer planets take longer to orbit','Outer planets move faster','Orbits are circular','Gravity is constant'], c:0}
+],
+atomi:[
+  {d:1, q:'Which phenomenon provides evidence for the particle nature of light?',
+   opts:['Photoelectric effect','Interference','Diffraction','Refraction'], c:0},
+  {d:1, q:'The energy of a photon depends on its:',
+   opts:['Frequency','Intensity','Amplitude','Speed'], c:0},
+  {d:1, q:'The emission spectrum of hydrogen is:',
+   opts:['A line spectrum','A continuous spectrum','A band spectrum','An absorption spectrum'], c:0},
+  {d:2, q:'A metal has work function 2.0 eV. Light of frequency 1.0 × 10¹⁵ Hz strikes it. Find the maximum kinetic energy of the emitted electrons. (h = 6.63 × 10⁻³⁴ J s; 1 eV = 1.6 × 10⁻¹⁹ J)',
+   opts:['2.14 eV','4.14 eV','2.0 eV','6.14 eV'], c:0},
+  {d:2, q:'When an electron in a hydrogen atom moves from n=2 to n=1, it:',
+   opts:['Emits a photon','Absorbs a photon','Becomes a proton','Splits into two'], c:0},
+  {d:2, q:'The threshold frequency of a metal is the minimum frequency at which:',
+   opts:['Photoelectrons are just emitted','Light is reflected','Light is absorbed','The metal melts'], c:0},
+  {d:3, q:'If the intensity of light on a photoelectric metal is doubled (frequency unchanged), the photocurrent:',
+   opts:['Doubles','Halves','Stays the same','Becomes zero'], c:0},
+  {d:3, q:'The energy levels of an atom are discrete because:',
+   opts:['Electrons occupy fixed energy states','Atoms are heavy','Electrons have no charge','Light has no mass'], c:0}
+],
+joule:[
+  {d:1, q:'Which of the following is a renewable energy source?',
+   opts:['Solar energy','Coal','Petroleum','Natural gas'], c:0},
+  {d:1, q:'The efficiency of an energy conversion device is always:',
+   opts:['Less than 100%','Equal to 100%','Greater than 100%','Equal to zero'], c:0},
+  {d:1, q:'The SI unit of power is:',
+   opts:['Watt','Joule','Newton','Volt'], c:0},
+  {d:2, q:'1 kWh is equal to:',
+   opts:['3.6 × 10⁶ J','1000 J','3600 J','60 J'], c:0},
+  {d:2, q:'A 100 W bulb is used for 5 hours. How much energy is used?',
+   opts:['0.5 kWh','5 kWh','20 kWh','500 kWh'], c:0},
+  {d:2, q:'Which energy source produces the least greenhouse gas during operation?',
+   opts:['Wind','Coal','Diesel','Natural gas'], c:0},
+  {d:3, q:'A power station has an efficiency of 40%. If it produces 200 MW of electrical power, what is the input power?',
+   opts:['500 MW','80 MW','200 MW','400 MW'], c:0},
+  {d:3, q:'Which of the following best explains why energy is "lost" in a machine?',
+   opts:['Energy is converted to less useful forms such as heat','Energy is destroyed','Mass is destroyed','The machine creates energy'], c:0}
+],
+meddy:[
+  {d:1, q:'The contrast of an X-ray image mainly depends on:',
+   opts:['Differences in attenuation between tissues','The colour of the tissue','The temperature of the patient','The size of the room'], c:0},
+  {d:1, q:'Ultrasound imaging typically uses frequencies in the range:',
+   opts:['1–10 MHz','20–200 Hz','1–10 kHz','100–500 MHz'], c:0},
+  {d:1, q:'The SI unit of equivalent radiation dose is:',
+   opts:['Sievert (Sv)','Watt (W)','Joule (J)','Volt (V)'], c:0},
+  {d:2, q:'Which type of radiation is used in radiotherapy to destroy cancer cells?',
+   opts:['X-rays / γ-rays','α-particles','Infrared','Microwaves'], c:0},
+  {d:2, q:'Why is ultrasound preferred over X-rays for imaging a foetus?',
+   opts:['It does not use ionising radiation','It is cheaper','It is faster','It produces colour images'], c:0},
+  {d:2, q:'In an X-ray tube, increasing the accelerating voltage will:',
+   opts:['Increase the penetrating power of X-rays','Decrease the intensity','Produce α-particles','Cool the tube'], c:0},
+  {d:3, q:'A patient receives a dose of 0.02 Sv from a scan. This is equivalent to:',
+   opts:['20 mSv','2 mSv','200 mSv','0.2 mSv'], c:0},
+  {d:3, q:'Which factor does NOT affect the attenuation of X-rays through tissue?',
+   opts:['The colour of the tissue','The density of the tissue','The atomic number of the tissue','The thickness of the tissue'], c:0}
+]
 };
 
 /* ============================================================
-   遊戲狀態
+   狀態
    ============================================================ */
+var STORAGE_KEY = 'physics_pals_save_v2';
 var state = {
   coins: 0,
-  palLevels: {},      // {newton: 1, ...}
-  clearedZones: [],   // ['newton', 'thermo', ...]
+  palLevels: {},
+  clearedZones: [],
   unlockedZones: ['newton'],
   currentZone: null,
   currentPal: null,
   battle: null
 };
-
-var STORAGE_KEY = 'physics_pals_save_v1';
 
 function save(){
   try{
@@ -869,38 +515,38 @@ function save(){
       clearedZones: state.clearedZones,
       unlockedZones: state.unlockedZones
     }));
-  }catch(e){}
+  }catch(e){ console.warn('save failed', e); }
 }
 function load(){
   try{
     var d = localStorage.getItem(STORAGE_KEY);
     if(!d) return false;
-    var parsed = JSON.parse(d);
-    state.coins = parsed.coins || 0;
-    state.palLevels = parsed.palLevels || {};
-    state.clearedZones = parsed.clearedZones || [];
-    state.unlockedZones = parsed.unlockedZones || ['newton'];
-    // 確保每隻物理獸有等級
-    PALS.forEach(function(p){
-      if(!state.palLevels[p.key]) state.palLevels[p.key] = 1;
-    });
+    var p = JSON.parse(d);
+    state.coins = p.coins || 0;
+    state.palLevels = p.palLevels || {};
+    state.clearedZones = p.clearedZones || [];
+    state.unlockedZones = p.unlockedZones || ['newton'];
+    PALS.forEach(function(pl){ if(!state.palLevels[pl.key]) state.palLevels[pl.key] = 1; });
     return true;
-  }catch(e){ return false; }
+  }catch(e){ console.warn('load failed', e); return false; }
 }
 function hasSave(){
-  return !!localStorage.getItem(STORAGE_KEY);
+  try{ return !!localStorage.getItem(STORAGE_KEY); }catch(e){ return false; }
 }
 
 /* ============================================================
-   UI 工具
+   工具
    ============================================================ */
 function $(id){ return document.getElementById(id); }
 function showScreen(id){
+  var el = $(id);
+  if(!el) return;
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
-  $(id).classList.add('active');
+  el.classList.add('active');
 }
 function toast(msg, dur){
   var t = $('toast');
+  if(!t) return;
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(t._timer);
@@ -910,12 +556,21 @@ function getPal(key){
   for(var i=0;i<PALS.length;i++) if(PALS[i].key===key) return PALS[i];
   return null;
 }
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
 
 /* ============================================================
-   地圖渲染
+   地圖
    ============================================================ */
 function renderMap(){
   var list = $('zoneList');
+  if(!list) return;
   list.innerHTML = '';
   ZONES.forEach(function(z){
     var locked = state.unlockedZones.indexOf(z.id) === -1;
@@ -947,10 +602,11 @@ function renderMap(){
 }
 
 /* ============================================================
-   圖鑑渲染
+   圖鑑
    ============================================================ */
 function renderDex(){
   var grid = $('dexGrid');
+  if(!grid) return;
   grid.innerHTML = '';
   PALS.forEach(function(p){
     var unlocked = state.palLevels[p.key] && state.palLevels[p.key] >= 1;
@@ -989,27 +645,25 @@ document.querySelectorAll('.bottom-nav .nav-item').forEach(function(btn){
 });
 
 /* ============================================================
-   物理獸選擇
+   選擇物理獸
    ============================================================ */
 function enterZone(zoneId){
-  var zone = ZONES.filter(function(z){ return z.id === zoneId; })[0];
+  var zone = null;
+  for(var i=0;i<ZONES.length;i++) if(ZONES[i].id === zoneId) zone = ZONES[i];
   if(!zone) return;
   state.currentZone = zone;
 
-  // 顯示可用物理獸
   var grid = $('selectGrid');
+  if(!grid) return;
   grid.innerHTML = '';
   $('selectTitle').textContent = zone.name;
 
-  // 該地區代表獸永遠可用，其他已解鎖地區代表獸也可用
-  var availablePals = [];
+  var available = [];
   ZONES.forEach(function(z){
-    if(state.unlockedZones.indexOf(z.id) !== -1){
-      availablePals.push(z.pal);
-    }
+    if(state.unlockedZones.indexOf(z.id) !== -1) available.push(z.pal);
   });
 
-  availablePals.forEach(function(pKey){
+  available.forEach(function(pKey){
     var p = getPal(pKey);
     if(!p) return;
     var lv = state.palLevels[p.key] || 1;
@@ -1040,16 +694,40 @@ $('btnBackFromSelect').addEventListener('click', function(){
    戰鬥系統
    ============================================================ */
 var BATTLE_HP = 100;
+var QUESTIONS_PER_BATTLE = 5;
 
 function startBattle(){
   var zone = state.currentZone;
   var pal = getPal(state.currentPal);
-  var qs = QUESTIONS[zone.id] || QUESTIONS.newton;
+  if(!zone || !pal) return;
+  var pool = QUESTIONS[zone.id] || QUESTIONS.newton;
+
+  // 隨機抽 5 題（保持難度梯度：先易後難）
+  var byDiff = {1:[], 2:[], 3:[]};
+  pool.forEach(function(q){ byDiff[q.d].push(q); });
+  var picked = [];
+  // 先抽 2 題 easy、2 題 medium、1 題 hard（如不足則由其他難度補）
+  function pickFrom(list, n){
+    var s = shuffle(list);
+    var out = s.slice(0, n);
+    return out;
+  }
+  picked = picked.concat(pickFrom(byDiff[1], 2));
+  picked = picked.concat(pickFrom(byDiff[2], 2));
+  picked = picked.concat(pickFrom(byDiff[3], 1));
+
+  // 如果唔夠 5 題，補齊
+  var all = shuffle(pool);
+  for(var i=0; i<all.length && picked.length < QUESTIONS_PER_BATTLE; i++){
+    if(picked.indexOf(all[i]) === -1) picked.push(all[i]);
+  }
+  // 最後打亂順序，但仍然建議由淺入深
+  picked.sort(function(a,b){ return a.d - b.d; });
 
   state.battle = {
     zone: zone,
     pal: pal,
-    questions: qs.slice(),  // 複製
+    questions: picked,
     qIndex: 0,
     playerHp: BATTLE_HP,
     playerMaxHp: BATTLE_HP,
@@ -1059,13 +737,11 @@ function startBattle(){
     answered: false
   };
 
-  // 打亂題目順序
-  state.battle.questions.sort(function(){ return Math.random() - 0.5; });
-
-  // 更新 UI
+  // UI
   $('battleTitle').textContent = zone.name;
   $('playerAvatar').innerHTML = pal.svg;
   $('playerAvatar').style.borderColor = pal.color;
+  $('playerAvatar').style.setProperty('--fc', pal.color);
   $('playerName').textContent = pal.name;
   $('enemyAvatar').textContent = zone.enemy.emoji;
   $('enemyName').textContent = zone.enemy.name;
@@ -1078,6 +754,7 @@ function startBattle(){
 
 function updateHpBars(){
   var b = state.battle;
+  if(!b) return;
   var pPct = (b.playerHp / b.playerMaxHp) * 100;
   var ePct = (b.enemyHp / b.enemyMaxHp) * 100;
   $('playerHp').style.width = pPct + '%';
@@ -1086,27 +763,40 @@ function updateHpBars(){
   $('enemyHpText').textContent = b.enemyHp + ' / ' + b.enemyMaxHp;
 }
 
+var DIFF_LABEL = {1:{t:'EASY', c:'diff-1'}, 2:{t:'MEDIUM', c:'diff-2'}, 3:{t:'HARD', c:'diff-3'}};
+
 function renderQuestion(){
   var b = state.battle;
+  if(!b) return;
   if(b.qIndex >= b.questions.length){
     endBattle();
     return;
   }
   b.answered = false;
   var q = b.questions[b.qIndex];
-  $('qCategory').textContent = b.zone.sub.toUpperCase();
+  var diff = DIFF_LABEL[q.d] || DIFF_LABEL[1];
+
+  $('qCategory').innerHTML = b.zone.sub.toUpperCase() +
+    ' <span class="diff-badge ' + diff.c + '">' + diff.t + '</span>';
   $('qProgress').textContent = (b.qIndex + 1) + ' / ' + b.questions.length;
   $('questionText').textContent = q.q;
 
   var answersBox = $('answers');
   answersBox.innerHTML = '';
-  var keys = ['A','B','C','D'];
 
-  q.a.forEach(function(ansText, i){
+  // 打亂選項，記住正確答案新位置
+  var opts = shuffle(q.opts.map(function(text, i){
+    return {text: text, correct: i === q.c};
+  }));
+
+  var keys = ['A','B','C','D'];
+  opts.forEach(function(opt, i){
     var btn = document.createElement('button');
     btn.className = 'answer-btn';
-    btn.innerHTML = '<span class="key">' + keys[i] + '</span><span>' + ansText + '</span>';
-    btn.addEventListener('click', function(){ answerQuestion(i, q.c); });
+    btn.innerHTML = '<span class="key">' + keys[i] + '</span><span>' + opt.text + '</span>';
+    btn.addEventListener('click', function(){
+      answerQuestion(i, opts.map(function(o){ return o.correct; }));
+    });
     answersBox.appendChild(btn);
   });
 
@@ -1114,27 +804,29 @@ function renderQuestion(){
   $('battleMsg').className = 'battle-msg';
 }
 
-function answerQuestion(selected, correct){
+function answerQuestion(selectedIdx, correctMap){
   var b = state.battle;
-  if(b.answered) return;
+  if(!b || b.answered) return;
   b.answered = true;
+
+  var correctIdx = correctMap.indexOf(true);
+  var isCorrect = selectedIdx === correctIdx;
 
   var btns = $('answers').querySelectorAll('.answer-btn');
   btns.forEach(function(btn, i){
     btn.disabled = true;
-    if(i === correct) btn.classList.add('correct');
-    if(i === selected && selected !== correct) btn.classList.add('wrong');
+    if(i === correctIdx) btn.classList.add('correct');
+    if(i === selectedIdx && !isCorrect) btn.classList.add('wrong');
   });
 
-  var isCorrect = selected === correct;
   var playerAvatar = $('playerAvatar');
   var enemyAvatar = $('enemyAvatar');
 
   if(isCorrect){
     b.correctCount++;
-    var dmg = 25 + Math.floor(Math.random() * 6); // 25–30
+    var dmg = 25 + Math.floor(Math.random() * 6);
     b.enemyHp = Math.max(0, b.enemyHp - dmg);
-    $('battleMsg').textContent = '✅ 答對！' + b.pal.name + ' 攻擊！ -' + dmg + ' HP';
+    $('battleMsg').textContent = '✅ Correct! ' + b.pal.name + ' attacks! -' + dmg + ' HP';
     $('battleMsg').className = 'battle-msg good';
     playerAvatar.classList.add('attack-r');
     setTimeout(function(){
@@ -1147,7 +839,7 @@ function answerQuestion(selected, correct){
   } else {
     var dmg2 = 18 + Math.floor(Math.random() * 6);
     b.playerHp = Math.max(0, b.playerHp - dmg2);
-    $('battleMsg').textContent = '❌ 答錯！迷思獸反擊！ -' + dmg2 + ' HP';
+    $('battleMsg').textContent = '❌ Wrong! The Myth Beast strikes back! -' + dmg2 + ' HP';
     $('battleMsg').className = 'battle-msg bad';
     enemyAvatar.classList.add('attack-l');
     setTimeout(function(){
@@ -1163,9 +855,7 @@ function answerQuestion(selected, correct){
   b.qIndex++;
 
   setTimeout(function(){
-    if(b.enemyHp <= 0 || b.playerHp <= 0){
-      endBattle();
-    } else if(b.qIndex >= b.questions.length){
+    if(b.enemyHp <= 0 || b.playerHp <= 0 || b.qIndex >= b.questions.length){
       endBattle();
     } else {
       renderQuestion();
@@ -1175,6 +865,7 @@ function answerQuestion(selected, correct){
 
 function endBattle(){
   var b = state.battle;
+  if(!b) return;
   var win = b.enemyHp <= 0 || (b.playerHp > 0 && b.correctCount >= Math.ceil(b.questions.length * 0.6));
 
   var popup = $('resultPopup');
@@ -1184,21 +875,18 @@ function endBattle(){
   var rewards = $('popupRewards');
 
   if(win){
-    // 勝利
     var coinReward = 20 + b.correctCount * 5;
     state.coins += coinReward;
     $('coinCount').textContent = state.coins;
 
-    // 升級該地區物理獸
     var palKey = b.zone.pal;
     state.palLevels[palKey] = (state.palLevels[palKey] || 1) + 1;
 
-    // 標記完成
     if(state.clearedZones.indexOf(b.zone.id) === -1){
       state.clearedZones.push(b.zone.id);
     }
-    // 解鎖下一個地區
-    var zoneIdx = ZONES.map(function(z){ return z.id; }).indexOf(b.zone.id);
+    var zoneIdx = -1;
+    for(var i=0;i<ZONES.length;i++) if(ZONES[i].id === b.zone.id) zoneIdx = i;
     if(zoneIdx >= 0 && zoneIdx < ZONES.length - 1){
       var nextZone = ZONES[zoneIdx + 1];
       if(state.unlockedZones.indexOf(nextZone.id) === -1){
@@ -1208,17 +896,16 @@ function endBattle(){
     save();
 
     emoji.textContent = '🏆';
-    title.textContent = '勝利！';
-    sub.textContent = '你打敗咗「' + b.zone.enemy.name + '」！\n答對 ' + b.correctCount + ' / ' + b.questions.length + ' 題';
+    title.textContent = 'Victory!';
+    sub.textContent = 'You defeated "' + b.zone.enemy.name + '"!\nCorrect: ' + b.correctCount + ' / ' + b.questions.length;
     rewards.innerHTML =
       '<div class="reward">⚡ +' + coinReward + '</div>' +
       '<div class="reward">📈 ' + getPal(palKey).name + ' Lv.' + state.palLevels[palKey] + '</div>';
   } else {
-    // 失敗
     emoji.textContent = '💀';
-    title.textContent = '失敗...';
-    sub.textContent = '迷思獸太強了！\n答對 ' + b.correctCount + ' / ' + b.questions.length + ' 題';
-    rewards.innerHTML = '<div class="reward" style="background:#FDE5EC;border-color:#F5A0B0;color:#C42F4D">再接再厲！</div>';
+    title.textContent = 'Defeated...';
+    sub.textContent = 'The Myth Beast was too strong!\nCorrect: ' + b.correctCount + ' / ' + b.questions.length;
+    rewards.innerHTML = '<div class="reward" style="background:#FDE5EC;border-color:#F5A0B0;color:#C42F4D">Try again!</div>';
   }
 
   popup.classList.add('show');
@@ -1226,6 +913,7 @@ function endBattle(){
 
 $('popupBack').addEventListener('click', function(){
   $('resultPopup').classList.remove('show');
+  state.battle = null;
   showScreen('main');
   renderMap();
   renderDex();
@@ -1234,25 +922,23 @@ $('popupBack').addEventListener('click', function(){
 
 $('popupRetry').addEventListener('click', function(){
   $('resultPopup').classList.remove('show');
+  state.battle = null;
   startBattle();
 });
 
 $('btnQuitBattle').addEventListener('click', function(){
-  if(confirm('確定要退出戰鬥嗎？進度唔會保存。')){
+  if(confirm('Quit the battle? Progress will not be saved.')){
+    state.battle = null;
     showScreen('main');
     renderMap();
   }
 });
 
 /* ============================================================
-   開始遊戲
+   開始 / 繼續
    ============================================================ */
 $('btnNewGame').addEventListener('click', function(){
-  if(hasSave()){
-    if(!confirm('已有存檔，確定要重新開始嗎？')){
-      return;
-    }
-  }
+  if(hasSave() && !confirm('已有存檔，確定要重新開始嗎？')) return;
   state = {
     coins: 0,
     palLevels: {},
@@ -1267,6 +953,7 @@ $('btnNewGame').addEventListener('click', function(){
   $('coinCount').textContent = state.coins;
   showScreen('main');
   renderMap();
+  renderDex();
 });
 
 $('btnContinue').addEventListener('click', function(){
@@ -1274,27 +961,35 @@ $('btnContinue').addEventListener('click', function(){
     $('coinCount').textContent = state.coins;
     showScreen('main');
     renderMap();
+    renderDex();
   }
 });
 
 /* ============================================================
-   初始化
+   初始化（穩健版）
    ============================================================ */
-(function init(){
-  // 載入存檔
-  var loaded = load();
-  if(loaded){
-    $('btnContinue').style.display = 'block';
-    $('coinCount').textContent = state.coins;
-  } else {
-    PALS.forEach(function(p){ state.palLevels[p.key] = 1; });
+function boot(){
+  try{
+    var loaded = load();
+    if(loaded){
+      $('btnContinue').style.display = 'block';
+      $('coinCount').textContent = state.coins;
+    } else {
+      PALS.forEach(function(p){ state.palLevels[p.key] = 1; });
+    }
+    // 預渲染
+    renderMap();
+    renderDex();
+  }catch(e){
+    console.error('boot error', e);
   }
+}
 
-  // 假載入動畫
-  setTimeout(function(){
-    showScreen('start');
-  }, 800);
-})();
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 </script>
 </body>
 </html>
